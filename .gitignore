@@ -1,5 +1,31 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# Compiled class file
+*.class
 
-# Ignore Gradle build output directory
-build
+# Log file
+*.log
+
+# Package Files #
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Intellij
+.idea
+/out/
+
+# Gradle
+.gradle
+/build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# Mac
+.DS_Store
