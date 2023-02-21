@@ -9,10 +9,17 @@ allprojects {
         mavenCentral()
     }
 
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+        testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
+        testImplementation("org.assertj:assertj-core:2.4.1")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    }
+
     testing {
         suites {
             getting(JvmTestSuite::class) {
-                useJUnitJupiter("5.9.1")
+                useJUnitJupiter()
             }
         }
     }
