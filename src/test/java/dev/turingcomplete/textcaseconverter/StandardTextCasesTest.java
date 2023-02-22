@@ -2,10 +2,13 @@ package dev.turingcomplete.textcaseconverter;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static dev.turingcomplete.textcaseconverter.StandardTextCases.ALTERNATING_CASE;
 import static dev.turingcomplete.textcaseconverter.StandardTextCases.CAMEL_CASE;
@@ -21,6 +24,7 @@ import static dev.turingcomplete.textcaseconverter.StandardTextCases.SNAKE_CASE;
 import static dev.turingcomplete.textcaseconverter.StandardTextCases.TRAIN_CASE;
 import static dev.turingcomplete.textcaseconverter.StandardTextCases.UPPER_CASE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class StandardTextCasesTest {
   // -- Class Fields ------------------------------------------------------------------------------------------------ //
@@ -136,6 +140,32 @@ public class StandardTextCasesTest {
   @Test
   void testTransformToWithCustomDelimiter() {
     assertThat(SNAKE_CASE.transformTo(COBOL_CASE, "foo_bar", "//")).isEqualTo("FOO//BAR");
+  }
+
+  @ParameterizedTest
+  @MethodSource("createTestExampleTestVectors")
+  void testExample(TextCase textCase) {
+    List<String> titleWords = StandardWordsSplitters.SPACE.split(textCase.title());
+    String expectedExample = textCase.transform(titleWords);
+    assertThat(expectedExample).isEqualTo(textCase.example());
+  }
+
+  static Stream<Arguments> createTestExampleTestVectors() {
+    return Stream.of(
+            arguments(CAMEL_CASE),
+            arguments(KEBAB_CASE),
+            arguments(SNAKE_CASE),
+            arguments(SCREAMING_SNAKE_CASE),
+            arguments(TRAIN_CASE),
+            arguments(COBOL_CASE),
+            arguments(PASCAL_CASE),
+            arguments(PASCAL_SNAKE_CASE),
+            arguments(CAMEL_SNAKE_CASE),
+            arguments(LOWER_CASE),
+            arguments(UPPER_CASE),
+            arguments(INVERTED_CASE),
+            arguments(ALTERNATING_CASE)
+    );
   }
 
   // -- Private Methods --------------------------------------------------------------------------------------------- //

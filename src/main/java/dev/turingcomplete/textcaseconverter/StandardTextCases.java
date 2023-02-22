@@ -198,7 +198,7 @@ public final class StandardTextCases {
    */
   public static final TextCase ALTERNATING_CASE = new StandardTextCase(
           "Alternating case",
-          "aLtErNaTiNg cAsE",
+          "aLtErNaTiNg CaSe",
           " ",
           createWordToAlternatingCaseTransformer(),
           SPACE
