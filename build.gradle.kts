@@ -18,7 +18,7 @@ allprojects {
 
     testing {
         suites {
-            getting(JvmTestSuite::class) {
+            val test by getting(JvmTestSuite::class) {
                 useJUnitJupiter()
             }
         }
