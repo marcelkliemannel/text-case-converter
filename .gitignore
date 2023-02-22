@@ -17,12 +17,12 @@
 hs_err_pid*
 
 # Intellij
-.idea
-/out/
+.idea/
+out/
 
 # Gradle
-.gradle
-/build/
+.gradle/
+build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
