@@ -18,7 +18,7 @@ public interface TextCase {
   String title();
 
   /**
-   * A sort example of this {@link TextCase}.
+   * An example of this {@link TextCase}.
    *
    * @return the example as a {@link String}; never null.
    */
@@ -44,12 +44,12 @@ public interface TextCase {
   WordsSplitter wordsSplitter();
 
   /**
-   * Transforms the given {@code word} into this {@link TextCase}.
+   * Transforms the given {@code words} into this {@link TextCase}.
    *
-   * @param word the {@link String} to be transformed; never null.
+   * @param words an array of {@link String} to be transformed; never null.
    * @return the word in this {@link TextCase}; never null.
    */
-  String transform(String word);
+  String transform(String ...words);
 
   /**
    * Transforms the given {@code words} into this {@link TextCase}. The words

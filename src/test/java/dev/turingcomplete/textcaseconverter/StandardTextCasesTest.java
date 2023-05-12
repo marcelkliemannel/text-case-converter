@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
@@ -71,15 +72,26 @@ public class StandardTextCasesTest {
   }
 
   /**
-   * Tests {@link TextCase#transform(String)}.
+   * Tests {@link TextCase#transform(String...)}.
    *
    * <p>We only test one test case here since internally everything gets
    * formatted by the same code as tested in
    * {@link StandardTextCasesTest#testTransformWords)}.
    */
-  @Test
-  void testTransformOfASingleWord() {
-    assertThat(UPPER_CASE.transform("foo")).isEqualTo("FOO");
+  @ParameterizedTest
+  @CsvSource(
+          value = {
+                  "\\\"\\\",\\\"\\\"",
+                  "foo,foo",
+                  "foo|bar,fooBar"
+          },
+          nullValues = "null"
+  )
+  void testTransformOfWordsArray(String encodedWords, String expectedResult) {
+    String[] words = encodedWords.split("\\|");
+    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
+    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
+    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
   }
 
   /**

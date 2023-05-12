@@ -1,9 +1,6 @@
 package dev.turingcomplete.textcaseconverter;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -34,7 +31,7 @@ public final class StandardTextCases {
    * <p>Example: {@code camelCase}.
    */
   public static final TextCase CAMEL_CASE = new StandardTextCase(
-          "Camel case",
+          "Camel Case",
           "camelCase",
           "",
           changeWordCaseTransformer(WordCaseTransformation.TO_LOWER_CASE),
@@ -47,7 +44,7 @@ public final class StandardTextCases {
    * <p>Example: {@code kebab-case}.
    */
   public static final TextCase KEBAB_CASE = new StandardTextCase(
-          "Kebab case",
+          "Kebab Case",
           "kebab-case",
           "-",
           createWordToLowerCaseTransformer(),
@@ -60,7 +57,7 @@ public final class StandardTextCases {
    * <p>Example: {@code snake_case}.
    */
   public static final TextCase SNAKE_CASE = new StandardTextCase(
-          "Snake case",
+          "Snake Case",
           "snake_case",
           "_",
           createWordToLowerCaseTransformer(),
@@ -73,7 +70,7 @@ public final class StandardTextCases {
    * <p>Example: {@code SCREAMING_SNAKE_CASE}.
    */
   public static final TextCase SCREAMING_SNAKE_CASE = new StandardTextCase(
-          "Screaming snake case",
+          "Screaming Snake Case",
           "SCREAMING_SNAKE_CASE",
           "_",
           createWordToUpperCaseTransformer(),
@@ -86,7 +83,7 @@ public final class StandardTextCases {
    * <p>Example: {@code Train-Case}.
    */
   public static final TextCase TRAIN_CASE = new StandardTextCase(
-          "Train case",
+          "Train Case",
           "Train-Case",
           "-",
           changeWordCaseTransformer(WordCaseTransformation.TO_UPPER_CASE),
@@ -99,7 +96,7 @@ public final class StandardTextCases {
    * <p>Example: {@code COBOL-CASE}.
    */
   public static final TextCase COBOL_CASE = new StandardTextCase(
-          "Cobol case",
+          "Cobol Case",
           "COBOL-CASE",
           "-",
           createWordToUpperCaseTransformer(),
@@ -112,7 +109,7 @@ public final class StandardTextCases {
    * <p>Example: {@code PascalCase}.
    */
   public static final TextCase PASCAL_CASE = new StandardTextCase(
-          "Pascal case",
+          "Pascal Case",
           "PascalCase",
           "",
           changeWordCaseTransformer(WordCaseTransformation.TO_UPPER_CASE),
@@ -127,7 +124,7 @@ public final class StandardTextCases {
    * <p>Example: {@code Pascal_Snake_Case}.
    */
   public static final TextCase PASCAL_SNAKE_CASE = new StandardTextCase(
-          "Pascal snake case",
+          "Pascal Snake Case",
           "Pascal_Snake_Case",
           "_",
           changeWordCaseTransformer(WordCaseTransformation.TO_UPPER_CASE),
@@ -142,7 +139,7 @@ public final class StandardTextCases {
    * <p>Example: {@code camel_Snake_Case}.
    */
   public static final TextCase CAMEL_SNAKE_CASE = new StandardTextCase(
-          "Camel snake case",
+          "Camel Snake Case",
           "camel_Snake_Case",
           "_",
           changeWordCaseTransformer(WordCaseTransformation.TO_LOWER_CASE),
@@ -155,7 +152,7 @@ public final class StandardTextCases {
    * <p>Example: {@code lowercase}.
    */
   public static final TextCase LOWER_CASE = new StandardTextCase(
-          "Lower case",
+          "Lower Case",
           "lowercase",
           "",
           createWordToLowerCaseTransformer(),
@@ -168,7 +165,7 @@ public final class StandardTextCases {
    * <p>Example: {@code UPPERCASE}.
    */
   public static final TextCase UPPER_CASE = new StandardTextCase(
-          "Upper case",
+          "Upper Case",
           "UPPERCASE",
           "",
           createWordToUpperCaseTransformer(),
@@ -197,7 +194,7 @@ public final class StandardTextCases {
    * <p>Example: From {@code Alternating Case} to {@code aLtErNaTiNg cAsE}.
    */
   public static final TextCase ALTERNATING_CASE = new StandardTextCase(
-          "Alternating case",
+          "Alternating Case",
           "aLtErNaTiNg CaSe",
           " ",
           createWordToAlternatingCaseTransformer(),
@@ -302,10 +299,10 @@ public final class StandardTextCases {
   ) implements TextCase {
 
     @Override
-    public String transform(String word) {
-      Objects.requireNonNull(word);
+    public String transform(String ...words) {
+      Objects.requireNonNull(words);
 
-      return transform(List.of(word), "");
+      return transform(Arrays.asList(words), "");
     }
 
     @Override
