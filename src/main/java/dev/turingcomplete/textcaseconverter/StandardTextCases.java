@@ -293,7 +293,7 @@ public final class StandardTextCases {
   private record StandardTextCase(
           String title,
           String example,
-          String wordsDelimiter,
+          String joinDelimiter,
           BiFunction<Integer, String, String> wordToTextCaseTransformer,
           WordsSplitter wordsSplitter
   ) implements TextCase {
@@ -309,15 +309,32 @@ public final class StandardTextCases {
     public String transform(List<String> words) {
       Objects.requireNonNull(words);
 
-      return transform(words, wordsDelimiter);
+      return transform(words, joinDelimiter);
     }
 
     @Override
-    public String transform(List<String> words, String wordsDelimiter) {
-      Objects.requireNonNull(words);
-      Objects.requireNonNull(wordsDelimiter);
+    public String transform(String text, WordsSplitter wordsSplitter) {
+      Objects.requireNonNull(text);
+      Objects.requireNonNull(wordsSplitter);
 
-      var result = new StringJoiner(wordsDelimiter);
+      return transform(wordsSplitter.split(text));
+    }
+
+    @Override
+    public String transform(String text, WordsSplitter wordsSplitter, String joinDelimiter) {
+      Objects.requireNonNull(text);
+      Objects.requireNonNull(wordsSplitter);
+      Objects.requireNonNull(joinDelimiter);
+
+      return transform(wordsSplitter.split(text), joinDelimiter);
+    }
+
+    @Override
+    public String transform(List<String> words, String joinDelimiter) {
+      Objects.requireNonNull(words);
+      Objects.requireNonNull(joinDelimiter);
+
+      var result = new StringJoiner(joinDelimiter);
       for (int i = 0; i < words.size(); i++) {
         result.add(wordToTextCaseTransformer.apply(i, words.get(i)));
       }
@@ -329,7 +346,7 @@ public final class StandardTextCases {
       Objects.requireNonNull(originTextCase);
       Objects.requireNonNull(originText);
 
-      return transform(originTextCase.wordsSplitter().split(originText), wordsDelimiter);
+      return transform(originTextCase.wordsSplitter().split(originText), joinDelimiter);
     }
 
     @Override

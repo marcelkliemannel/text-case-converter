@@ -33,7 +33,7 @@ public interface TextCase {
    *
    * @return the words delimiter as a {@link String}; never null.
    */
-  String wordsDelimiter();
+  String joinDelimiter();
 
   /**
    * A {@link WordsSplitter} that can be used to split a text that is in
@@ -53,7 +53,7 @@ public interface TextCase {
 
   /**
    * Transforms the given {@code words} into this {@link TextCase}. The words
-   * will be joined by the {@link #wordsDelimiter()}.
+   * will be joined by the {@link #joinDelimiter()}.
    *
    * @param words a {@link List} of {@link String}s to be transformed;
    *              never null.
@@ -64,20 +64,44 @@ public interface TextCase {
 
   /**
    * Transforms the given {@code words} into this {@link TextCase}. The words
-   * will be joined by the given {@code wordsDelimiter}.
+   * will be joined by the given {@code joinDelimiter}.
    *
    * @param words          a {@link List} of {@link String}s to be transformed;
    *                       never null.
-   * @param wordsDelimiter a delimiting {@link String}; never null.
+   * @param joinDelimiter  a delimiting {@link String}; never null.
    * @return a text based on the given words in this {@link TextCase};
    * never null.
    */
-  String transform(List<String> words, String wordsDelimiter);
+  String transform(List<String> words, String joinDelimiter);
+
+  /**
+   * Transforms the given {@code text} into this {@link TextCase}. The text
+   * will be split into words by the given {@code wordsSplitter} and joined
+   * by the {@link #joinDelimiter()}.
+   *
+   * @param text          a text as a {@link String} to be transformed; never null.
+   * @param wordsSplitter a delimiting {@link String}; never null.
+   * @return a text based on the given words in this {@link TextCase};
+   * never null.
+   */
+  String transform(String text, WordsSplitter wordsSplitter);
+
+  /**
+   * Transforms the given {@code text} into this {@link TextCase}. The text
+   * will be split into words by the given {@code wordsSplitter} and joined
+   * by the given {@code joinDelimiter}.
+   *
+   * @param text          a text as a {@link String} to be transformed; never null.
+   * @param wordsSplitter a delimiting {@link String}; never null.
+   * @return a text based on the given words in this {@link TextCase};
+   * never null.
+   */
+  String transform(String text, WordsSplitter wordsSplitter, String joinDelimiter);
 
   /**
    * Transforms the given {@code originText} which is in the given
    * {@code originTextCase} to {@code this} {@link TextCase}. The words
-   * will be joined by {@link #wordsDelimiter()}.
+   * will be joined by {@link #joinDelimiter()}.
    *
    * @param originTextCase the {@link TextCase} of the given {@code originText};
    *                       never null.
@@ -89,20 +113,20 @@ public interface TextCase {
   /**
    * Transforms the given {@code originText} which is in the given
    * {@code originTextCase} to {@code this} {@link TextCase}. The words
-   * will be joined by the given {@code wordsDelimiter}.
+   * will be joined by the given {@code joinDelimiter}.
    *
    * @param originTextCase the {@link TextCase} of the given {@code originText};
    *                       never null.
    * @param originText     the {@link String} to transform; never null.
-   * @param wordsDelimiter a delimiting {@link String}; never null.
+   * @param joinDelimiter  a delimiting {@link String}; never null.
    * @return a text transformed to {@code this} {@link TextCase}; never null.
    */
-  String transformFrom(TextCase originTextCase, String originText, String wordsDelimiter);
+  String transformFrom(TextCase originTextCase, String originText, String joinDelimiter);
 
   /**
    * Transforms the given {@code originText} which is in {@code this}
    * {@link TextCase} to the {@code targetTextCase}. The words will be joined
-   * by the {@link #wordsDelimiter()} of the {@code targetTextCase}.
+   * by the {@link #joinDelimiter()} of the {@code targetTextCase}.
    *
    * @param targetTextCase the {@link TextCase} to transform the given
    *                       {@code originText} into; never null.
@@ -114,15 +138,15 @@ public interface TextCase {
   /**
    * Transforms the given {@code originText} which is in {@code this}
    * {@link TextCase} to the {@code targetTextCase}. The words will be joined
-   * by the given {@code wordsDelimiter}.
+   * by the given {@code joinDelimiter}.
    *
    * @param targetTextCase the {@link TextCase} to transform the given
    *                       {@code originText} into; never null.
    * @param originText     the {@link String} to transform; never null.
-   * @param wordsDelimiter a delimiting {@link String}; never null.
+   * @param joinDelimiter  a delimiting {@link String}; never null.
    * @return a text transformed to the {@code targetTextCase}; never null.
    */
-  String transformTo(TextCase targetTextCase, String originText, String wordsDelimiter);
+  String transformTo(TextCase targetTextCase, String originText, String joinDelimiter);
 
   // -- Private Methods --------------------------------------------------------------------------------------------- //
   // -- Inner Type -------------------------------------------------------------------------------------------------- //

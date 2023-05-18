@@ -95,6 +95,30 @@ public class StandardTextCasesTest {
   }
 
   /**
+   * Tests {@link TextCase#transform(String, WordsSplitter)}.
+   *
+   * <p>We only test one test case here since internally everything gets
+   * formatted by the same code as tested in
+   * {@link StandardTextCasesTest#testTransformWords)}.
+   */
+  @Test
+  void testTransformTextWithWordsSplitter() {
+    assertThat(KEBAB_CASE.transform("foo bar", StandardWordsSplitters.SPACE)).isEqualTo("foo-bar");
+  }
+
+  /**
+   * Tests {@link TextCase#transform(String, WordsSplitter, String)}.
+   *
+   * <p>We only test one test case here since internally everything gets
+   * formatted by the same code as tested in
+   * {@link StandardTextCasesTest#testTransformWords)}.
+   */
+  @Test
+  void testTransformTextWithWordsSplitterAndDelimiter() {
+    assertThat(KEBAB_CASE.transform("foo bar", StandardWordsSplitters.SPACE, "//")).isEqualTo("foo//bar");
+  }
+
+  /**
    * Tests {@link TextCase#transform(List, String)}.
    *
    * <p>We only test one test case here since internally everything gets

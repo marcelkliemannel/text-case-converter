@@ -1,5 +1,5 @@
 words,CAMEL_CASE,KEBAB_CASE,SNAKE_CASE,SCREAMING_SNAKE_CASE,TRAIN_CASE,COBOL_CASE,PASCAL_CASE,PASCAL_SNAKE_CASE,CAMEL_SNAKE_CASE,LOWER_CASE,UPPER_CASE,INVERTED_CASE,ALTERNATING_CASE
-"\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\""","\""\"""
+,,,,,,,,,,,,"""""",""""""
 f,f,f,f,F,F,F,F,F,f,f,F,F,F
 foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOO,FoO
 Foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,fOO,fOo
