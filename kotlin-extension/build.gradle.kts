@@ -19,3 +19,5 @@ tasks {
         add("archives", dokkaJar)
     }
 }
+
+publishing.publications.getByName<MavenPublication>(project.name).pom.name.set("Text Case Converter - Kotlin Extension")

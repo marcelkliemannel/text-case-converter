@@ -1,11 +1,10 @@
-import java.net.URI
-
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
     `java-library`
     signing
     `maven-publish`
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 allprojects {
@@ -70,6 +69,36 @@ allprojects {
             create<MavenPublication>(project.name) {
                 from(components["java"])
                 setArtifacts(configurations.archives.get().allArtifacts)
+
+                artifactId = project.parent?.let { "${it.name}-${project.name}" } ?: project.name
+
+                pom {
+                    // Set name on project base
+                    description.set("This Java/Kotlin library provides an intuitive API for converting strings between different text cases. It has a wide range of built-in support for the most common text cases. In addition, the library is designed to be easily extended with new custom text cases, making it highly flexible and adaptable.")
+                    url.set("https://github.com/marcelkliemannel/text-case-converter")
+                    developers {
+                        developer {
+                            name.set("Marcel Kliemannel")
+                            id.set("marcelkliemannel")
+                            email.set("dev@marcelkliemannel.com")
+                        }
+                    }
+                    licenses {
+                        license {
+                            name.set("The Apache Software License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+                    issueManagement {
+                        system.set("GitHub")
+                        url.set("https://github.com/marcelkliemannel/text-case-converter/issues")
+                    }
+                    scm {
+                        connection.set("scm:git:git://github.com:marcelkliemannel/text-case-converter.git")
+                        developerConnection.set("scm:git:ssh://github.com:marcelkliemannel/text-case-converter.git")
+                        url.set("https://github.com/marcelkliemannel/text-case-converter")
+                    }
+                }
             }
         }
     }
@@ -85,51 +114,15 @@ allprojects {
     signing {
         sign(publishing.publications[project.name])
     }
+}
 
-    configure<PublishingExtension> {
-        publications {
-            afterEvaluate {
-                named<MavenPublication>(project.name) {
-                    artifactId = project.parent?.let { "${it.name}-${project.name}" } ?: project.name
-
-                    pom {
-                        name.set("Text Case Converter")
-                        description.set("This Java/Kotlin library provides an intuitive API for converting strings between different text cases. It has a wide range of built-in support for the most common text cases. In addition, the library is designed to be easily extended with new custom text cases, making it highly flexible and adaptable.")
-                        url.set("https://github.com/marcelkliemannel/text-case-converter")
-                        developers {
-                            developer {
-                                name.set("Marcel Kliemannel")
-                                id.set("marcelkliemannel")
-                                email.set("dev@marcelkliemannel.com")
-                            }
-                        }
-                        licenses {
-                            license {
-                                name.set("The Apache Software License, Version 2.0")
-                                url.set("http://www.apache.org/licenses/LICENSE-2.0")
-                            }
-                        }
-                        issueManagement {
-                            system.set("GitHub")
-                            url.set("https://github.com/marcelkliemannel/text-case-converter/issues")
-                        }
-                        scm {
-                            connection.set("scm:git:git://github.com:marcelkliemannel/text-case-converter.git")
-                            developerConnection.set("scm:git:ssh://github.com:marcelkliemannel/text-case-converter.git")
-                            url.set("https://github.com/marcelkliemannel/text-case-converter")
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                url = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-                credentials {
-                    username = properties("sonar.username")
-                    password = properties("sonar.password")
-                }
-            }
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(properties("sonar.username"))
+            password.set(properties("sonar.password"))
         }
     }
 }
+
+publishing.publications.getByName<MavenPublication>(project.name).pom.name.set("Text Case Converter")
