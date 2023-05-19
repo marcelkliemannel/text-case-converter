@@ -94,7 +94,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTextWithWordsSplitter() {
-        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES)).isEqualTo(requireNonNullElse("foo-bar", ""));
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES)).isEqualTo("foo-bar");
     }
 
     /**
@@ -106,7 +106,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTextWithWordsSplitterAndDelimiter() {
-        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES, "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES, "//")).isEqualTo("foo//bar");
     }
 
     /**
@@ -118,7 +118,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertWordsWithCustomDelimiter() {
-        assertThat(KEBAB_CASE.convert(List.of("foo", "bar"), "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
+        assertThat(KEBAB_CASE.convert(List.of("foo", "bar"), "//")).isEqualTo("foo//bar");
     }
 
     /**
@@ -130,7 +130,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertFrom() {
-        assertThat(SNAKE_CASE.convertFrom(KEBAB_CASE, "foo-bar")).isEqualTo(requireNonNullElse("foo_bar", ""));
+        assertThat(SNAKE_CASE.convertFrom(KEBAB_CASE, "foo-bar")).isEqualTo("foo_bar");
     }
 
     /**
@@ -142,7 +142,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertFromWithCustomDelimiter() {
-        assertThat(SNAKE_CASE.convertFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
+        assertThat(SNAKE_CASE.convertFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo("foo//bar");
     }
 
     /**
@@ -154,7 +154,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTo() {
-        assertThat(SNAKE_CASE.convertTo(KEBAB_CASE, "foo_bar")).isEqualTo(requireNonNullElse("foo-bar", ""));
+        assertThat(SNAKE_CASE.convertTo(KEBAB_CASE, "foo_bar")).isEqualTo("foo-bar");
     }
 
     /**
@@ -166,7 +166,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertToWithCustomDelimiter() {
-        assertThat(SNAKE_CASE.convertTo(COBOL_CASE, "foo_bar", "//")).isEqualTo(requireNonNullElse("FOO//BAR", ""));
+        assertThat(SNAKE_CASE.convertTo(COBOL_CASE, "foo_bar", "//")).isEqualTo("FOO//BAR");
     }
 
     @ParameterizedTest
