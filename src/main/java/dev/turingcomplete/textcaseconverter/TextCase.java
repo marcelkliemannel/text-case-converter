@@ -68,7 +68,7 @@ public interface TextCase {
      *
      * @param words         a {@link List} of {@link String}s to be converted;
      *                      never null.
-     * @param joinDelimiter a delimiting {@link String}; never null.
+     * @param joinDelimiter a words joining delimiter as {@link String}; never null.
      * @return a text based on the given words in this {@link TextCase};
      * never null.
      */
@@ -80,7 +80,7 @@ public interface TextCase {
      * by the {@link #joinDelimiter()}.
      *
      * @param text          a text as a {@link String} to be converted; never null.
-     * @param wordsSplitter a delimiting {@link String}; never null.
+     * @param wordsSplitter a {@link WordsSplitter}; never null.
      * @return a text based on the given words in this {@link TextCase};
      * never null.
      */
@@ -92,7 +92,8 @@ public interface TextCase {
      * by the given {@code joinDelimiter}.
      *
      * @param text          a text as a {@link String} to be converted; never null.
-     * @param wordsSplitter a delimiting {@link String}; never null.
+     * @param wordsSplitter a {@link WordsSplitter}; never null.
+     * @param joinDelimiter a words joining delimiter as {@link String}; never null.
      * @return a text based on the given words in this {@link TextCase};
      * never null.
      */
@@ -118,7 +119,7 @@ public interface TextCase {
      * @param originTextCase the {@link TextCase} of the given {@code originText};
      *                       never null.
      * @param originText     the {@link String} to convert; never null.
-     * @param joinDelimiter  a delimiting {@link String}; never null.
+     * @param joinDelimiter a words joining delimiter as {@link String}; never null.
      * @return a text converted to {@code this} {@link TextCase}; never null.
      */
     String convertFrom(TextCase originTextCase, String originText, String joinDelimiter);
@@ -143,7 +144,7 @@ public interface TextCase {
      * @param targetTextCase the {@link TextCase} to convert the given
      *                       {@code originText} into; never null.
      * @param originText     the {@link String} to convert; never null.
-     * @param joinDelimiter  a delimiting {@link String}; never null.
+     * @param joinDelimiter a words joining delimiter as {@link String}; never null.
      * @return a text converted to the {@code targetTextCase}; never null.
      */
     String convertTo(TextCase targetTextCase, String originText, String joinDelimiter);
