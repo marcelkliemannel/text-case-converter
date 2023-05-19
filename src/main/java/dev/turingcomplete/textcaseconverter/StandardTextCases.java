@@ -26,7 +26,7 @@ public final class StandardTextCases {
     // -- Class Fields ---------------------------------------------------------------------------------------------- //
 
     /**
-     * A {@link TextCase} that represents the strict form of Camel Case.
+     * A {@link TextCase} that represents the strict form of camel case.
      *
      * <p>In the strict form, every upper case character will be treated as the
      * start of a new word. For example, {@code SQL} would be three words:
@@ -36,14 +36,14 @@ public final class StandardTextCases {
      */
     public static final TextCase STRICT_CAMEL_CASE = new StandardTextCase(
             "Strict Camel Case",
-            "strictCamelCase",
+            "strictCamelCaseSQL",
             "",
             changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
             StandardWordsSplitters.STRICT_UPPER_CASE
     );
 
     /**
-     * A {@link TextCase} that represents the soft form of Camel Case.
+     * A {@link TextCase} that represents the soft form of camel case.
      *
      * <p>In the soft form, every upper case character will be treated as the
      * start of a new word if the previous character is not upper case. For
@@ -52,8 +52,8 @@ public final class StandardTextCases {
      * <p>Example: {@code camelCase}.
      */
     public static final TextCase SOFT_CAMEL_CASE = new StandardTextCase(
-            "Strict Camel Case",
-            "strictCamelCase",
+            "Soft Camel Case",
+            "softCamelCaseSql",
             "",
             changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
             StandardWordsSplitters.SOFT_UPPER_CASE

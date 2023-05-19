@@ -171,27 +171,28 @@ public class StandardTextCasesTest {
 
     @ParameterizedTest
     @MethodSource("createTestExampleTestVectors")
-    void testExample(TextCase textCase) {
+    void testExample(TextCase textCase, String fixedExpectExample) {
         List<String> titleWords = StandardWordsSplitters.SPACES.split(textCase.title());
-        String expectedExample = textCase.convert(titleWords);
+        String expectedExample = fixedExpectExample != null ? fixedExpectExample : textCase.convert(titleWords);
         assertThat(expectedExample).isEqualTo(requireNonNullElse(textCase.example(), ""));
     }
 
     static Stream<Arguments> createTestExampleTestVectors() {
         return Stream.of(
-                arguments(STRICT_CAMEL_CASE),
-                arguments(KEBAB_CASE),
-                arguments(SNAKE_CASE),
-                arguments(SCREAMING_SNAKE_CASE),
-                arguments(TRAIN_CASE),
-                arguments(COBOL_CASE),
-                arguments(PASCAL_CASE),
-                arguments(PASCAL_SNAKE_CASE),
-                arguments(CAMEL_SNAKE_CASE),
-                arguments(LOWER_CASE),
-                arguments(UPPER_CASE),
-                arguments(INVERTED_CASE),
-                arguments(ALTERNATING_CASE)
+                arguments(STRICT_CAMEL_CASE, "strictCamelCaseSQL"),
+                arguments(SOFT_CAMEL_CASE, "softCamelCaseSql"),
+                arguments(KEBAB_CASE, null),
+                arguments(SNAKE_CASE, null),
+                arguments(SCREAMING_SNAKE_CASE, null),
+                arguments(TRAIN_CASE, null),
+                arguments(COBOL_CASE, null),
+                arguments(PASCAL_CASE, null),
+                arguments(PASCAL_SNAKE_CASE, null),
+                arguments(CAMEL_SNAKE_CASE, null),
+                arguments(LOWER_CASE, null),
+                arguments(UPPER_CASE, null),
+                arguments(INVERTED_CASE, null),
+                arguments(ALTERNATING_CASE, null)
         );
     }
 
