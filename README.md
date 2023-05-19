@@ -56,7 +56,7 @@ The class `dev.turingcomplete.textcaseconverter.StandardTextCases` contains stat
 | Name                 | Example              | Remark                                                                                                                                            |
 |----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
 | Strict Camel Case    | camelSQLCase         | Each upper case character defines a new word.                                                                                                     |
-| Soft Camel Case      | camelSqlCase         | Only if the previous character is not upper case, an uppercase character defines a new word.                                                      |
+| Soft Camel Case      | camelSqlCase         | An uppercase character defines a new word only if the previous character is not in upper case.                                                    |
 | Kebab Case           | kebab-case           |                                                                                                                                                   |
 | Snake Case           | snake_case           |                                                                                                                                                   |
 | Screaming Snake Case | SCREAMING_SNAKE_CASE |                                                                                                                                                   |
