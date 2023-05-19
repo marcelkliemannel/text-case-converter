@@ -28,182 +28,182 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class StandardTextCasesTest {
-  // -- Class Fields ------------------------------------------------------------------------------------------------ //
-  // -- Instance Fields --------------------------------------------------------------------------------------------- //
-  // -- Initialization ---------------------------------------------------------------------------------------------- //
-  // -- Exposed Methods --------------------------------------------------------------------------------------------- //
+    // -- Class Fields ---------------------------------------------------------------------------------------------- //
+    // -- Instance Fields ------------------------------------------------------------------------------------------- //
+    // -- Initialization -------------------------------------------------------------------------------------------- //
+    // -- Exposed Methods ------------------------------------------------------------------------------------------- //
 
-  @ParameterizedTest
-  @CsvFileSource(
-          resources = "/dev/turingcomplete/textcaseconverter/textCasesTestVectors.csv",
-          useHeadersInDisplayName = true,
-          nullValues = {"null"}
-  )
-  void testTransformWords(
-          String combinedWords,
-          String camelCase,
-          String kebabCase,
-          String snakeCase,
-          String screamingSnakeCase,
-          String trainCase,
-          String cobolCase,
-          String pascalCase,
-          String pascalSnakeCase,
-          String camelSnakeCase,
-          String lowerCase,
-          String upperCase,
-          String invertedCase,
-          String alternatingCase
-  ) {
-    List<String> words = Arrays.stream(combinedWords.split(";")).toList();
-    assertThat(CAMEL_CASE.transform(words)).isEqualTo(camelCase);
-    assertThat(KEBAB_CASE.transform(words)).isEqualTo(kebabCase);
-    assertThat(SNAKE_CASE.transform(words)).isEqualTo(snakeCase);
-    assertThat(SCREAMING_SNAKE_CASE.transform(words)).isEqualTo(screamingSnakeCase);
-    assertThat(TRAIN_CASE.transform(words)).isEqualTo(trainCase);
-    assertThat(COBOL_CASE.transform(words)).isEqualTo(cobolCase);
-    assertThat(PASCAL_CASE.transform(words)).isEqualTo(pascalCase);
-    assertThat(PASCAL_SNAKE_CASE.transform(words)).isEqualTo(pascalSnakeCase);
-    assertThat(CAMEL_SNAKE_CASE.transform(words)).isEqualTo(camelSnakeCase);
-    assertThat(LOWER_CASE.transform(words)).isEqualTo(lowerCase);
-    assertThat(UPPER_CASE.transform(words)).isEqualTo(upperCase);
-    assertThat(INVERTED_CASE.transform(words)).isEqualTo(invertedCase);
-    assertThat(ALTERNATING_CASE.transform(words)).isEqualTo(alternatingCase);
-  }
+    @ParameterizedTest
+    @CsvFileSource(
+            resources = "/dev/turingcomplete/textcaseconverter/textCasesTestVectors.csv",
+            useHeadersInDisplayName = true,
+            nullValues = {"null"}
+    )
+    void testConvertWords(
+            String combinedWords,
+            String camelCase,
+            String kebabCase,
+            String snakeCase,
+            String screamingSnakeCase,
+            String trainCase,
+            String cobolCase,
+            String pascalCase,
+            String pascalSnakeCase,
+            String camelSnakeCase,
+            String lowerCase,
+            String upperCase,
+            String invertedCase,
+            String alternatingCase
+    ) {
+        List<String> words = Arrays.stream(combinedWords.split(";")).toList();
+        assertThat(CAMEL_CASE.convert(words)).isEqualTo(camelCase);
+        assertThat(KEBAB_CASE.convert(words)).isEqualTo(kebabCase);
+        assertThat(SNAKE_CASE.convert(words)).isEqualTo(snakeCase);
+        assertThat(SCREAMING_SNAKE_CASE.convert(words)).isEqualTo(screamingSnakeCase);
+        assertThat(TRAIN_CASE.convert(words)).isEqualTo(trainCase);
+        assertThat(COBOL_CASE.convert(words)).isEqualTo(cobolCase);
+        assertThat(PASCAL_CASE.convert(words)).isEqualTo(pascalCase);
+        assertThat(PASCAL_SNAKE_CASE.convert(words)).isEqualTo(pascalSnakeCase);
+        assertThat(CAMEL_SNAKE_CASE.convert(words)).isEqualTo(camelSnakeCase);
+        assertThat(LOWER_CASE.convert(words)).isEqualTo(lowerCase);
+        assertThat(UPPER_CASE.convert(words)).isEqualTo(upperCase);
+        assertThat(INVERTED_CASE.convert(words)).isEqualTo(invertedCase);
+        assertThat(ALTERNATING_CASE.convert(words)).isEqualTo(alternatingCase);
+    }
 
-  /**
-   * Tests {@link TextCase#transform(String...)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @ParameterizedTest
-  @CsvSource(
-          value = {
-                  "\\\"\\\",\\\"\\\"",
-                  "foo,foo",
-                  "foo|bar,fooBar"
-          },
-          nullValues = "null"
-  )
-  void testTransformOfWordsArray(String encodedWords, String expectedResult) {
-    String[] words = encodedWords.split("\\|");
-    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
-    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
-    assertThat(CAMEL_CASE.transform(words)).isEqualTo(expectedResult);
-  }
+    /**
+     * Tests {@link TextCase#convert(String...)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "\\\"\\\",\\\"\\\"",
+                    "foo,foo",
+                    "foo|bar,fooBar"
+            },
+            nullValues = "null"
+    )
+    void testConvertOfWordsArray(String encodedWords, String expectedResult) {
+        String[] words = encodedWords.split("\\|");
+        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
+        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
+        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
+    }
 
-  /**
-   * Tests {@link TextCase#transform(String, WordsSplitter)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformTextWithWordsSplitter() {
-    assertThat(KEBAB_CASE.transform("foo bar", StandardWordsSplitters.SPACE)).isEqualTo("foo-bar");
-  }
+    /**
+     * Tests {@link TextCase#convert(String, WordsSplitter)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertTextWithWordsSplitter() {
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES)).isEqualTo("foo-bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transform(String, WordsSplitter, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformTextWithWordsSplitterAndDelimiter() {
-    assertThat(KEBAB_CASE.transform("foo bar", StandardWordsSplitters.SPACE, "//")).isEqualTo("foo//bar");
-  }
+    /**
+     * Tests {@link TextCase#convert(String, WordsSplitter, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertTextWithWordsSplitterAndDelimiter() {
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES, "//")).isEqualTo("foo//bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transform(List, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformWordsWithCustomDelimiter() {
-    assertThat(KEBAB_CASE.transform(List.of("foo", "bar"), "//")).isEqualTo("foo//bar");
-  }
+    /**
+     * Tests {@link TextCase#convert(List, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertWordsWithCustomDelimiter() {
+        assertThat(KEBAB_CASE.convert(List.of("foo", "bar"), "//")).isEqualTo("foo//bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transformFrom(TextCase, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformFrom() {
-    assertThat(SNAKE_CASE.transformFrom(KEBAB_CASE, "foo-bar")).isEqualTo("foo_bar");
-  }
+    /**
+     * Tests {@link TextCase#convertFrom(TextCase, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertFrom() {
+        assertThat(SNAKE_CASE.convertFrom(KEBAB_CASE, "foo-bar")).isEqualTo("foo_bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transformFrom(TextCase, String, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformFromWithCustomDelimiter() {
-    assertThat(SNAKE_CASE.transformFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo("foo//bar");
-  }
+    /**
+     * Tests {@link TextCase#convertFrom(TextCase, String, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertFromWithCustomDelimiter() {
+        assertThat(SNAKE_CASE.convertFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo("foo//bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transformTo(TextCase, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformTo() {
-    assertThat(SNAKE_CASE.transformTo(KEBAB_CASE, "foo_bar")).isEqualTo("foo-bar");
-  }
+    /**
+     * Tests {@link TextCase#convertTo(TextCase, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords)}.
+     */
+    @Test
+    void testConvertTo() {
+        assertThat(SNAKE_CASE.convertTo(KEBAB_CASE, "foo_bar")).isEqualTo("foo-bar");
+    }
 
-  /**
-   * Tests {@link TextCase#transformTo(TextCase, String)}.
-   *
-   * <p>We only test one test case here since internally everything gets
-   * formatted by the same code as tested in
-   * {@link StandardTextCasesTest#testTransformWords)}.
-   */
-  @Test
-  void testTransformToWithCustomDelimiter() {
-    assertThat(SNAKE_CASE.transformTo(COBOL_CASE, "foo_bar", "//")).isEqualTo("FOO//BAR");
-  }
+    /**
+     * Tests {@link TextCase#convertTo(TextCase, String)}.
+     *
+     * <p>We only test one test case here since internally everything gets
+     * formatted by the same code as tested in
+     * {@link StandardTextCasesTest#testConvertWords} )}.
+     */
+    @Test
+    void testConvertToWithCustomDelimiter() {
+        assertThat(SNAKE_CASE.convertTo(COBOL_CASE, "foo_bar", "//")).isEqualTo("FOO//BAR");
+    }
 
-  @ParameterizedTest
-  @MethodSource("createTestExampleTestVectors")
-  void testExample(TextCase textCase) {
-    List<String> titleWords = StandardWordsSplitters.SPACE.split(textCase.title());
-    String expectedExample = textCase.transform(titleWords);
-    assertThat(expectedExample).isEqualTo(textCase.example());
-  }
+    @ParameterizedTest
+    @MethodSource("createTestExampleTestVectors")
+    void testExample(TextCase textCase) {
+        List<String> titleWords = StandardWordsSplitters.SPACES.split(textCase.title());
+        String expectedExample = textCase.convert(titleWords);
+        assertThat(expectedExample).isEqualTo(textCase.example());
+    }
 
-  static Stream<Arguments> createTestExampleTestVectors() {
-    return Stream.of(
-            arguments(CAMEL_CASE),
-            arguments(KEBAB_CASE),
-            arguments(SNAKE_CASE),
-            arguments(SCREAMING_SNAKE_CASE),
-            arguments(TRAIN_CASE),
-            arguments(COBOL_CASE),
-            arguments(PASCAL_CASE),
-            arguments(PASCAL_SNAKE_CASE),
-            arguments(CAMEL_SNAKE_CASE),
-            arguments(LOWER_CASE),
-            arguments(UPPER_CASE),
-            arguments(INVERTED_CASE),
-            arguments(ALTERNATING_CASE)
-    );
-  }
+    static Stream<Arguments> createTestExampleTestVectors() {
+        return Stream.of(
+                arguments(CAMEL_CASE),
+                arguments(KEBAB_CASE),
+                arguments(SNAKE_CASE),
+                arguments(SCREAMING_SNAKE_CASE),
+                arguments(TRAIN_CASE),
+                arguments(COBOL_CASE),
+                arguments(PASCAL_CASE),
+                arguments(PASCAL_SNAKE_CASE),
+                arguments(CAMEL_SNAKE_CASE),
+                arguments(LOWER_CASE),
+                arguments(UPPER_CASE),
+                arguments(INVERTED_CASE),
+                arguments(ALTERNATING_CASE)
+        );
+    }
 
-  // -- Private Methods --------------------------------------------------------------------------------------------- //
-  // -- Inner Type -------------------------------------------------------------------------------------------------- //
+    // -- Private Methods ------------------------------------------------------------------------------------------- //
+    // -- Inner Type ------------------------------------------------------------------------------------------------ //
 }
