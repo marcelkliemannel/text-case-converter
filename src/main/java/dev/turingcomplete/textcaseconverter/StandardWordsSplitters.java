@@ -41,8 +41,18 @@ public final class StandardWordsSplitters {
     /**
      * A {@link WordsSplitter} that splits a text around every upper case
      * characters.
+     *
+     * <p>This will split `SQL` into three words `S`, `Q` and `L`.
      */
-    public static final WordsSplitter UPPER_CASE = StandardWordsSplitters::toWordsByUpperCaseCharacter;
+    public static final WordsSplitter STRICT_UPPER_CASE = text -> toWordsByUpperCaseCharacter(text, true);
+
+    /**
+     * A {@link WordsSplitter} that splits a text around every upper case
+     * characters if the previous one is not upper case.
+     *
+     * <p>This will split `SQL` into one word `SQL`.
+     */
+    public static final WordsSplitter SOFT_UPPER_CASE = text -> toWordsByUpperCaseCharacter(text, false);
 
     /**
      * A {@link WordsSplitter} that will handle any input as one word.
@@ -54,7 +64,7 @@ public final class StandardWordsSplitters {
     // -- Exposed Methods ------------------------------------------------------------------------------------------- //
     // -- Private Methods ------------------------------------------------------------------------------------------- //
 
-    private static List<String> toWordsByUpperCaseCharacter(String text) {
+    private static List<String> toWordsByUpperCaseCharacter(String text, boolean strict) {
         int textLength = text.length();
         if (textLength == 0) {
             return List.of();
@@ -71,7 +81,7 @@ public final class StandardWordsSplitters {
             for (int i = 1; i < textLength; i++) {
                 String character = text.substring(i, i + 1);
                 boolean isUpperCase = TextUtilities.isUpperCase(character);
-                if (isUpperCase && !previousCharacterWasUppercase) {
+                if (isUpperCase && (strict || !previousCharacterWasUppercase)) {
                     // New word
                     words.add(wordBuilder.toString());
                     wordBuilder = new StringBuilder();

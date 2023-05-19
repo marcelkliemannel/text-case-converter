@@ -15,20 +15,23 @@ class StandardWordsSplittersTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "\"\",\"\"",
+            ",",
             "foo,foo",
             "  foo ,foo",
             "foo bar,foo|bar",
             " foo   bar  ,foo|bar"
     })
-    void testSpaceWordSeparator(String input, String expectedWords) {
+    void testSpaceWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
         List<String> actualWords = StandardWordsSplitters.SPACES.split(input);
-        assertThat(actualWords).containsExactly(expectedWords.split("\\|"));
+        assertThat(actualWords).containsExactly(expectedWords);
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "\"\",\"\"",
+            ",",
             "f,f",
             "F,F",
             "Fo,Fo",
@@ -40,18 +43,47 @@ class StandardWordsSplittersTest {
             "FB,F|B",
             "FBB,F|B|B",
             "FoBB,Fo|B|B",
-            "f o,f o",
-            "f o B,f o |B",
-            "  foo Bar,  foo |Bar"
+            "f o,f| o",
+            "f o B,f| o| |B",
+            "  foo Bar,foo| |Bar"
     })
-    void testUpperCaseCharacterWordSeparator(String input, String expectedWords) {
-        List<String> actualWords = StandardWordsSplitters.UPPER_CASE.split(input);
-        assertThat(actualWords).containsExactly(expectedWords.split("\\|"));
+    void testStrictUpperCaseCharacterWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
+        List<String> actualWords = StandardWordsSplitters.STRICT_UPPER_CASE.split(input);
+        assertThat(actualWords).containsExactly(expectedWords);
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "\"\",\"\"",
+            ",",
+            "f,f",
+            "F,F",
+            "Fo,Fo",
+            "Foo,Foo",
+            "FooBar,Foo|Bar",
+            "fooBar,foo|Bar",
+            "fooSQLbar,foo|SQLbar",
+            "foo,foo",
+            "FB,FB",
+            "FBB,FBB",
+            "FoBB,Fo|BB",
+            "f o,f| o",
+            "f o B,f| o| B",
+            "  foo Bar,foo| Bar"
+    })
+    void testSoftUpperCaseCharacterWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
+        List<String> actualWords = StandardWordsSplitters.SOFT_UPPER_CASE.split(input);
+        assertThat(actualWords).containsExactly(expectedWords);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            ",",
             "f,f",
             "f-o,f|o",
             "-,",
@@ -59,14 +91,17 @@ class StandardWordsSplittersTest {
             "f-o-o,f|o|o",
             "f-o----o,f|o|o"
     })
-    void testDashWordSeparator(String input, String expectedWords) {
+    void testDashWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
         List<String> actualWords = StandardWordsSplitters.DASH.split(input);
-        assertThat(actualWords).containsExactly(expectedWords.split("\\|"));
+        assertThat(actualWords).containsExactly(expectedWords);
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "\"\",\"\"",
+            ",",
             "f,f",
             "f_o,f|o",
             "_,",
@@ -75,9 +110,12 @@ class StandardWordsSplittersTest {
             "f_o_o,f|o|o",
             "f_o____o,f|o|o"
     })
-    void testUnderscoreWordSeparator(String input, List<String> expectedWords) {
+    void testUnderscoreWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
         List<String> actualWords = StandardWordsSplitters.UNDERSCORE.split(input);
-        assertThat(actualWords).containsExactlyElementsOf(expectedWords);
+        assertThat(actualWords).containsExactly(expectedWords);
     }
 
     // -- Private Methods ------------------------------------------------------------------------------------------- //

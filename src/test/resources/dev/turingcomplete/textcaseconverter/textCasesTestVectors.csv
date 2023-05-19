@@ -1,8 +1,9 @@
-words,CAMEL_CASE,KEBAB_CASE,SNAKE_CASE,SCREAMING_SNAKE_CASE,TRAIN_CASE,COBOL_CASE,PASCAL_CASE,PASCAL_SNAKE_CASE,CAMEL_SNAKE_CASE,LOWER_CASE,UPPER_CASE,INVERTED_CASE,ALTERNATING_CASE
-,,,,,,,,,,,,"""""",""""""
-f,f,f,f,F,F,F,F,F,f,f,F,F,F
-foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOO,FoO
-Foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,fOO,fOo
-foO,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOo,FoO
-foo;bar,fooBar,foo-bar,foo_bar,FOO_BAR,Foo-Bar,FOO-BAR,FooBar,Foo_Bar,foo_Bar,foobar,FOOBAR,FOO BAR,FoO BaR
-foo;bar;baz,fooBarBaz,foo-bar-baz,foo_bar_baz,FOO_BAR_BAZ,Foo-Bar-Baz,FOO-BAR-BAZ,FooBarBaz,Foo_Bar_Baz,foo_Bar_Baz,foobarbaz,FOOBARBAZ,FOO BAR BAZ,FoO BaR BaZ
+words,STRICT_CAMEL_CASE,SOFT_CAMEL_CASE,KEBAB_CASE,SNAKE_CASE,SCREAMING_SNAKE_CASE,TRAIN_CASE,COBOL_CASE,PASCAL_CASE,PASCAL_SNAKE_CASE,CAMEL_SNAKE_CASE,LOWER_CASE,UPPER_CASE,INVERTED_CASE,ALTERNATING_CASE
+,,,,,,,,,,,,,,
+f,f,f,f,f,F,F,F,F,F,f,f,F,F,F
+foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOO,FoO
+Foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,fOO,fOo
+foO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOo,FoO
+foo;bar,fooBar,fooBar,foo-bar,foo_bar,FOO_BAR,Foo-Bar,FOO-BAR,FooBar,Foo_Bar,foo_Bar,foobar,FOOBAR,FOO BAR,FoO BaR
+foo;bar;baz,fooBarBaz,fooBarBaz,foo-bar-baz,foo_bar_baz,FOO_BAR_BAZ,Foo-Bar-Baz,FOO-BAR-BAZ,FooBarBaz,Foo_Bar_Baz,foo_Bar_Baz,foobarbaz,FOOBARBAZ,FOO BAR BAZ,FoO BaR BaZ
+FOO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,foo,fOo

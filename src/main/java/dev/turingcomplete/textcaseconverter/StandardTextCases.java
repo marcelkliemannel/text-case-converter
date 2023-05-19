@@ -26,16 +26,37 @@ public final class StandardTextCases {
     // -- Class Fields ---------------------------------------------------------------------------------------------- //
 
     /**
-     * A {@link TextCase} that represents the camel case.
+     * A {@link TextCase} that represents the strict form of Camel Case.
+     *
+     * <p>In the strict form, every upper case character will be treated as the
+     * start of a new word. For example, {@code SQL} would be three words:
+     * {@code S}, {@code Q} and {@code L}.
      *
      * <p>Example: {@code camelCase}.
      */
-    public static final TextCase CAMEL_CASE = new StandardTextCase(
-            "Camel Case",
-            "camelCase",
+    public static final TextCase STRICT_CAMEL_CASE = new StandardTextCase(
+            "Strict Camel Case",
+            "strictCamelCase",
             "",
             changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
-            StandardWordsSplitters.UPPER_CASE
+            StandardWordsSplitters.STRICT_UPPER_CASE
+    );
+
+    /**
+     * A {@link TextCase} that represents the soft form of Camel Case.
+     *
+     * <p>In the soft form, every upper case character will be treated as the
+     * start of a new word if the previous character is not upper case. For
+     * example, {@code SQL} would be one word.
+     *
+     * <p>Example: {@code camelCase}.
+     */
+    public static final TextCase SOFT_CAMEL_CASE = new StandardTextCase(
+            "Strict Camel Case",
+            "strictCamelCase",
+            "",
+            changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
+            StandardWordsSplitters.SOFT_UPPER_CASE
     );
 
     /**
@@ -113,7 +134,7 @@ public final class StandardTextCases {
             "PascalCase",
             "",
             changeWordCaseConverter(WordCaseConversion.TO_UPPER_CASE),
-            StandardWordsSplitters.UPPER_CASE
+            StandardWordsSplitters.STRICT_UPPER_CASE
     );
 
     /**
@@ -195,7 +216,7 @@ public final class StandardTextCases {
      */
     public static final TextCase ALTERNATING_CASE = new StandardTextCase(
             "Alternating Case",
-            "aLtErNaTiNg CaSe",
+            "aLtErNaTiNg cAsE",
             " ",
             createWordToAlternatingCaseConverter(),
             SPACES

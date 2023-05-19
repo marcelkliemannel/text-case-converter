@@ -11,19 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.ALTERNATING_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.CAMEL_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.CAMEL_SNAKE_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.COBOL_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.INVERTED_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.KEBAB_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.LOWER_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.PASCAL_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.PASCAL_SNAKE_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.SCREAMING_SNAKE_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.SNAKE_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.TRAIN_CASE;
-import static dev.turingcomplete.textcaseconverter.StandardTextCases.UPPER_CASE;
+import static dev.turingcomplete.textcaseconverter.StandardTextCases.*;
+import static java.util.Objects.requireNonNullElse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -40,8 +29,9 @@ public class StandardTextCasesTest {
             nullValues = {"null"}
     )
     void testConvertWords(
-            String combinedWords,
-            String camelCase,
+            String inputWordsEncoded,
+            String strictCamelCase,
+            String softCamelCase,
             String kebabCase,
             String snakeCase,
             String screamingSnakeCase,
@@ -55,20 +45,21 @@ public class StandardTextCasesTest {
             String invertedCase,
             String alternatingCase
     ) {
-        List<String> words = Arrays.stream(combinedWords.split(";")).toList();
-        assertThat(CAMEL_CASE.convert(words)).isEqualTo(camelCase);
-        assertThat(KEBAB_CASE.convert(words)).isEqualTo(kebabCase);
-        assertThat(SNAKE_CASE.convert(words)).isEqualTo(snakeCase);
-        assertThat(SCREAMING_SNAKE_CASE.convert(words)).isEqualTo(screamingSnakeCase);
-        assertThat(TRAIN_CASE.convert(words)).isEqualTo(trainCase);
-        assertThat(COBOL_CASE.convert(words)).isEqualTo(cobolCase);
-        assertThat(PASCAL_CASE.convert(words)).isEqualTo(pascalCase);
-        assertThat(PASCAL_SNAKE_CASE.convert(words)).isEqualTo(pascalSnakeCase);
-        assertThat(CAMEL_SNAKE_CASE.convert(words)).isEqualTo(camelSnakeCase);
-        assertThat(LOWER_CASE.convert(words)).isEqualTo(lowerCase);
-        assertThat(UPPER_CASE.convert(words)).isEqualTo(upperCase);
-        assertThat(INVERTED_CASE.convert(words)).isEqualTo(invertedCase);
-        assertThat(ALTERNATING_CASE.convert(words)).isEqualTo(alternatingCase);
+        List<String> words = inputWordsEncoded == null ? List.of() : Arrays.stream(inputWordsEncoded.split(";")).toList();
+        assertThat(STRICT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(strictCamelCase, ""));
+        assertThat(SOFT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(softCamelCase, ""));
+        assertThat(KEBAB_CASE.convert(words)).isEqualTo(requireNonNullElse(kebabCase, ""));
+        assertThat(SNAKE_CASE.convert(words)).isEqualTo(requireNonNullElse(snakeCase, ""));
+        assertThat(SCREAMING_SNAKE_CASE.convert(words)).isEqualTo(requireNonNullElse(screamingSnakeCase, ""));
+        assertThat(TRAIN_CASE.convert(words)).isEqualTo(requireNonNullElse(trainCase, ""));
+        assertThat(COBOL_CASE.convert(words)).isEqualTo(requireNonNullElse(cobolCase, ""));
+        assertThat(PASCAL_CASE.convert(words)).isEqualTo(requireNonNullElse(pascalCase, ""));
+        assertThat(PASCAL_SNAKE_CASE.convert(words)).isEqualTo(requireNonNullElse(pascalSnakeCase, ""));
+        assertThat(CAMEL_SNAKE_CASE.convert(words)).isEqualTo(requireNonNullElse(camelSnakeCase, ""));
+        assertThat(LOWER_CASE.convert(words)).isEqualTo(requireNonNullElse(lowerCase, ""));
+        assertThat(UPPER_CASE.convert(words)).isEqualTo(requireNonNullElse(upperCase, ""));
+        assertThat(INVERTED_CASE.convert(words)).isEqualTo(requireNonNullElse(invertedCase, ""));
+        assertThat(ALTERNATING_CASE.convert(words)).isEqualTo(requireNonNullElse(alternatingCase, ""));
     }
 
     /**
@@ -89,9 +80,9 @@ public class StandardTextCasesTest {
     )
     void testConvertOfWordsArray(String encodedWords, String expectedResult) {
         String[] words = encodedWords.split("\\|");
-        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
-        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
-        assertThat(CAMEL_CASE.convert(words)).isEqualTo(expectedResult);
+        assertThat(STRICT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(expectedResult, ""));
+        assertThat(STRICT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(expectedResult, ""));
+        assertThat(STRICT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(expectedResult, ""));
     }
 
     /**
@@ -103,7 +94,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTextWithWordsSplitter() {
-        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES)).isEqualTo("foo-bar");
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES)).isEqualTo(requireNonNullElse("foo-bar", ""));
     }
 
     /**
@@ -115,7 +106,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTextWithWordsSplitterAndDelimiter() {
-        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES, "//")).isEqualTo("foo//bar");
+        assertThat(KEBAB_CASE.convert("foo bar", StandardWordsSplitters.SPACES, "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
     }
 
     /**
@@ -127,7 +118,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertWordsWithCustomDelimiter() {
-        assertThat(KEBAB_CASE.convert(List.of("foo", "bar"), "//")).isEqualTo("foo//bar");
+        assertThat(KEBAB_CASE.convert(List.of("foo", "bar"), "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
     }
 
     /**
@@ -139,7 +130,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertFrom() {
-        assertThat(SNAKE_CASE.convertFrom(KEBAB_CASE, "foo-bar")).isEqualTo("foo_bar");
+        assertThat(SNAKE_CASE.convertFrom(KEBAB_CASE, "foo-bar")).isEqualTo(requireNonNullElse("foo_bar", ""));
     }
 
     /**
@@ -151,7 +142,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertFromWithCustomDelimiter() {
-        assertThat(SNAKE_CASE.convertFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo("foo//bar");
+        assertThat(SNAKE_CASE.convertFrom(COBOL_CASE, "FOO-BAR", "//")).isEqualTo(requireNonNullElse("foo//bar", ""));
     }
 
     /**
@@ -163,7 +154,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertTo() {
-        assertThat(SNAKE_CASE.convertTo(KEBAB_CASE, "foo_bar")).isEqualTo("foo-bar");
+        assertThat(SNAKE_CASE.convertTo(KEBAB_CASE, "foo_bar")).isEqualTo(requireNonNullElse("foo-bar", ""));
     }
 
     /**
@@ -175,7 +166,7 @@ public class StandardTextCasesTest {
      */
     @Test
     void testConvertToWithCustomDelimiter() {
-        assertThat(SNAKE_CASE.convertTo(COBOL_CASE, "foo_bar", "//")).isEqualTo("FOO//BAR");
+        assertThat(SNAKE_CASE.convertTo(COBOL_CASE, "foo_bar", "//")).isEqualTo(requireNonNullElse("FOO//BAR", ""));
     }
 
     @ParameterizedTest
@@ -183,12 +174,12 @@ public class StandardTextCasesTest {
     void testExample(TextCase textCase) {
         List<String> titleWords = StandardWordsSplitters.SPACES.split(textCase.title());
         String expectedExample = textCase.convert(titleWords);
-        assertThat(expectedExample).isEqualTo(textCase.example());
+        assertThat(expectedExample).isEqualTo(requireNonNullElse(textCase.example(), ""));
     }
 
     static Stream<Arguments> createTestExampleTestVectors() {
         return Stream.of(
-                arguments(CAMEL_CASE),
+                arguments(STRICT_CAMEL_CASE),
                 arguments(KEBAB_CASE),
                 arguments(SNAKE_CASE),
                 arguments(SCREAMING_SNAKE_CASE),

@@ -1,6 +1,6 @@
 # Text Case Converter
 
-The Java/Kotlin library provides an intuitive API for converting strings between different text cases. It has a wide range of built-in support for the most common text cases. In addition, the library is designed to be easily extended with new custom text cases, making it highly flexible and adaptable.
+This Java/Kotlin library provides an intuitive API for converting strings between different text cases. It has a wide range of built-in support for the most common text cases. In addition, the library is designed to be easily extended with new custom text cases, making it highly flexible and adaptable.
 
 > ℹ️ In this repository, changes don't happen that often and the library gets updated very rarely. However, this is **not** an abandoned project. Since the code is relatively simple and has good test coverage, there is hardly any need to change anything.
 
@@ -53,20 +53,21 @@ The library has several built-in implementations of both interfaces in the class
 
 The class `dev.turingcomplete.textcaseconverter.StandardTextCases` contains static instances for the most common text cases:
 
-| Name                 | Example              | Remark                                                       |
-| -------------------- | -------------------- | ------------------------------------------------------------ |
-| Camel Case           | camelCase            |                                                              |
-| Kebab Case           | kebab-case           |                                                              |
-| Snake Case           | snake_case           |                                                              |
-| Screaming Snake Case | SCREAMING_SNAKE_CASE |                                                              |
-| Train Case           | Train-Case           |                                                              |
-| Cobol Case           | COBOL-CASE           |                                                              |
-| Pascal Case          | PascalCase           |                                                              |
-| Pascal Sanke Case    | Pascal_Snake_Case    | First character is always uppercase.                         |
-| Camel Snake Case     | camel_Snake_Case     | First character is always lowercase.                         |
-| Lower Case           | lowercase            |                                                              |
-| Upper Case           | UPPERCASE            |                                                              |
-| Inverted Case        | iNVERTED cASE        | The case of each character will be flipped.                  |
+| Name                 | Example              | Remark                                                                                                                                            |
+|----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Strict Camel Case    | camelSQLCase         | Each upper case character defines a new word.                                                                                                     |
+| Soft Camel Case      | camelSqlCase         | Only if the previous character is not upper case, an uppercase character defines a new word.                                                      |
+| Kebab Case           | kebab-case           |                                                                                                                                                   |
+| Snake Case           | snake_case           |                                                                                                                                                   |
+| Screaming Snake Case | SCREAMING_SNAKE_CASE |                                                                                                                                                   |
+| Train Case           | Train-Case           |                                                                                                                                                   |
+| Cobol Case           | COBOL-CASE           |                                                                                                                                                   |
+| Pascal Case          | PascalCase           |                                                                                                                                                   |
+| Pascal Snake Case    | Pascal_Snake_Case    | First character is always uppercase.                                                                                                              |
+| Camel Snake Case     | camel_Snake_Case     | First character is always lowercase.                                                                                                              |
+| Lower Case           | lowercase            |                                                                                                                                                   |
+| Upper Case           | UPPERCASE            |                                                                                                                                                   |
+| Inverted Case        | iNVERTED cASE        | The case of each character will be flipped.                                                                                                       |
 | Alternating Case     | aLtErNaTiNg CaSe     | Each subsequent character will have the opposite case of the previous character. The alternation starts with the opposite of the first character. |
 
 ### Example Usage
@@ -93,10 +94,11 @@ StandardTextCases.COBOL_CASE.convertTo(StandardTextCases.CAMEL_CASE, "FOO-BAR-BA
 
 The class `dev.turingcomplete.textcaseconverter.StandardWordsSplitters` provides static instances for the most common ways to split a text into words:
 
-- By spaces (` `), that splits a text around (possible multiple) space characters. This leads to the fact that blank words are obmitted.
-- By a single dash (`-`). Blank words will not be obmitted (e.g., `foo--bar` would have three words).
-- By a single underscore (`_`). Blank words will not be obmitted (e.g., `foo__bar` would have three words).
-- By an upper case character. For example `fooBar` would be the two words `foo` and `Bar`, and `SQL` would be the three words `S`, `Q` and `L`.
+- By spaces (` `), that splits a text around (possible multiple) space characters. Blank words are omitted.
+- By a single dash (`-`). Blank words are omitted.
+- By a single underscore (`_`). Blank words are omitted.
+- By a "strict" upper case character, there each upper case character determines a new word. For example `fooBar` would be the two words `foo` and `Bar`, and `SQL` would be the three words `S`, `Q` and `L`.
+- By a "soft" upper case character, there each upper case character determines a new word if the previous one wasn't an upper case character. For example `fooBar` would be the two words `foo` and `Bar`, and `SQL` would be the one word.
 
 Note that each `TextCase` provides a `WordsSplitter` through `TextCase#wordsSplitter`, which can be used to split a text given in that text case into individual words. This is used internally, for example, when we want to convert a text case to another without having to explicitly specify a `WordsSplitter`.
 
