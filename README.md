@@ -104,7 +104,7 @@ Note that each `TextCase` provides a `WordsSplitter` through `TextCase#wordsSpli
 
 ## Kotlin Extension
 
-By adding library X, some Kotlin Extensions methods are provided, making it easier to use this library in Kotlin code. These additional features can be seen in the following example:
+By adding library `test-case-converter-kotlin-extension`, some Kotlin extensions are provided, making it easier to use this library in Kotlin code. These additional features can be seen in the following example:
 
 ```kotlin
 // Convert the given raw text into Snake Case. Both will return `foo_bar`.
