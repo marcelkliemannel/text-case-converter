@@ -26,6 +26,26 @@ public final class TextUtilities {
         return text.toUpperCase(Configuration.TO_UPPER_CASE_LOCALE).equals(text);
     }
 
+    /**
+     * Converts the given {@code text} to lower case.
+     *
+     * @param text the text to be converted; never null.
+     * @return the lower case text; never null.
+     */
+    public static String toLowerCase(String text) {
+        return text.toLowerCase(Configuration.TO_LOWER_CASE_LOCALE);
+    }
+
+    /**
+     * Converts the given {@code text} to upper case.
+     *
+     * @param text the text to be converted; never null.
+     * @return the upper case text; never null.
+     */
+    public static String toUpperCase(String text) {
+        return text.toUpperCase(Configuration.TO_UPPER_CASE_LOCALE);
+    }
+
     // -- Private Methods ------------------------------------------------------------------------------------------- //
     // -- Inner Type ------------------------------------------------------------------------------------------------ //
 }

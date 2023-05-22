@@ -1,16 +1,12 @@
 package dev.turingcomplete.textcaseconverter;
 
+import dev.turingcomplete.textcaseconverter._internal.TextUtilities;
+
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static dev.turingcomplete.textcaseconverter.Configuration.TO_LOWER_CASE_LOCALE;
-import static dev.turingcomplete.textcaseconverter.Configuration.TO_UPPER_CASE_LOCALE;
-import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.DASH;
-import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.NOOP;
-import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.SPACES;
-import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.UNDERSCORE;
-import static dev.turingcomplete.textcaseconverter._internal.TextUtilities.isUpperCase;
+import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.*;
+import static dev.turingcomplete.textcaseconverter._internal.TextUtilities.*;
 
 /**
  * A collection of common {@link TextCase}s.
@@ -38,7 +34,7 @@ public final class StandardTextCases {
             "Strict Camel Case",
             "strictCamelCaseSQL",
             "",
-            changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
+            createCamelcaseConverter(true),
             StandardWordsSplitters.STRICT_UPPER_CASE
     );
 
@@ -55,7 +51,7 @@ public final class StandardTextCases {
             "Soft Camel Case",
             "softCamelCaseSql",
             "",
-            changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
+            createCamelcaseConverter(false),
             StandardWordsSplitters.SOFT_UPPER_CASE
     );
 
@@ -107,7 +103,7 @@ public final class StandardTextCases {
             "Train Case",
             "Train-Case",
             "-",
-            changeWordCaseConverter(WordCaseConversion.TO_UPPER_CASE),
+            changeWordCaseConverter(CaseConversionOfFirstCharacterInWord.TO_UPPER_CASE),
             DASH
     );
 
@@ -133,7 +129,7 @@ public final class StandardTextCases {
             "Pascal Case",
             "PascalCase",
             "",
-            changeWordCaseConverter(WordCaseConversion.TO_UPPER_CASE),
+            changeWordCaseConverter(CaseConversionOfFirstCharacterInWord.TO_UPPER_CASE),
             StandardWordsSplitters.STRICT_UPPER_CASE
     );
 
@@ -148,7 +144,7 @@ public final class StandardTextCases {
             "Pascal Snake Case",
             "Pascal_Snake_Case",
             "_",
-            changeWordCaseConverter(WordCaseConversion.TO_UPPER_CASE),
+            changeWordCaseConverter(CaseConversionOfFirstCharacterInWord.TO_UPPER_CASE),
             UNDERSCORE
     );
 
@@ -163,7 +159,7 @@ public final class StandardTextCases {
             "Camel Snake Case",
             "camel_Snake_Case",
             "_",
-            changeWordCaseConverter(WordCaseConversion.TO_LOWER_CASE),
+            changeWordCaseConverter(CaseConversionOfFirstCharacterInWord.TO_LOWER_CASE),
             UNDERSCORE
     );
 
@@ -227,40 +223,62 @@ public final class StandardTextCases {
     // -- Exposed Methods ------------------------------------------------------------------------------------------- //
     // -- Private Methods ------------------------------------------------------------------------------------------- //
 
-    private static BiFunction<Integer, String, String> changeWordCaseConverter(
-            WordCaseConversion firstWordFirstCharacterConversion
+    private static WordCaseConversion changeWordCaseConverter(
+            CaseConversionOfFirstCharacterInWord firstWordFirstCharacterConversion
     ) {
-        return (index, word) -> {
+        return (index, previousWord, word) -> {
             int wordLength = word.length();
             if (wordLength == 0) {
                 return "";
             } else if (wordLength == 1 && index == 0) {
                 return firstWordFirstCharacterConversion.convert(word);
-            } else if (wordLength == 1) {
-                return word.toLowerCase(TO_LOWER_CASE_LOCALE);
             } else {
                 String firstCharacter = word.substring(0, 1);
                 firstCharacter = index == 0 ? firstWordFirstCharacterConversion.convert(firstCharacter)
-                        : firstCharacter.toUpperCase(TO_UPPER_CASE_LOCALE);
+                        : toUpperCase(firstCharacter);
 
                 String restOfWord = word.substring(1);
-                restOfWord = restOfWord.toLowerCase(TO_LOWER_CASE_LOCALE);
+                restOfWord = toLowerCase(restOfWord);
 
                 return firstCharacter + restOfWord;
             }
         };
     }
 
-    private static BiFunction<Integer, String, String> createWordToLowerCaseConverter() {
-        return (__, word) -> word.toLowerCase(TO_LOWER_CASE_LOCALE);
+    private static WordCaseConversion createCamelcaseConverter(boolean strict) {
+        return (index, previousWord, word) -> {
+            int wordLength = word.length();
+            if (wordLength == 0) {
+                return "";
+            } else if (wordLength == 1 && index == 0) {
+                return toLowerCase(word);
+            } else if (wordLength == 1) {
+                if (strict) {
+                    return toUpperCase(word);
+                } else {
+                    return previousWord.length() == 1 && isUpperCase(previousWord) ? toLowerCase(word) : toUpperCase(word);
+                }
+            } else {
+                String firstCharacter = word.substring(0, 1);
+                firstCharacter = index == 0 ? toLowerCase(firstCharacter) : toUpperCase(firstCharacter);
+
+                String restOfWord = toLowerCase(word.substring(1));
+
+                return firstCharacter + restOfWord;
+            }
+        };
     }
 
-    private static BiFunction<Integer, String, String> createWordToUpperCaseConverter() {
-        return (__, word) -> word.toUpperCase(TO_UPPER_CASE_LOCALE);
+    private static WordCaseConversion createWordToLowerCaseConverter() {
+        return (__, ___, word) -> toLowerCase(word);
     }
 
-    private static BiFunction<Integer, String, String> createWordToInvertedCaseConverter() {
-        return (__, word) -> {
+    private static WordCaseConversion createWordToUpperCaseConverter() {
+        return (__, ___, word) -> toUpperCase(word);
+    }
+
+    private static WordCaseConversion createWordToInvertedCaseConverter() {
+        return (__, ___, word) -> {
             int wordLength = word.length();
             if (wordLength == 0) {
                 return "";
@@ -269,8 +287,8 @@ public final class StandardTextCases {
                 for (int i = 0; i < wordLength; i++) {
                     String character = word.substring(i, i + 1);
                     character = isUpperCase(character)
-                            ? character.toLowerCase(TO_LOWER_CASE_LOCALE)
-                            : character.toUpperCase(TO_UPPER_CASE_LOCALE);
+                            ? toLowerCase(character)
+                            : toUpperCase(character);
                     result.append(character);
                 }
                 return result.toString();
@@ -278,8 +296,8 @@ public final class StandardTextCases {
         };
     }
 
-    private static BiFunction<Integer, String, String> createWordToAlternatingCaseConverter() {
-        return (__, word) -> {
+    private static WordCaseConversion createWordToAlternatingCaseConverter() {
+        return (__, ___, word) -> {
             int wordLength = word.length();
             if (wordLength == 0) {
                 return "";
@@ -290,10 +308,10 @@ public final class StandardTextCases {
                 for (int i = 0; i < wordLength; i++) {
                     String character = word.substring(i, i + 1);
                     if (lastUpperCase) {
-                        character = character.toLowerCase(TO_LOWER_CASE_LOCALE);
+                        character = toLowerCase(character);
                         lastUpperCase = false;
                     } else {
-                        character = character.toUpperCase(TO_UPPER_CASE_LOCALE);
+                        character = toUpperCase(character);
                         lastUpperCase = true;
                     }
                     result.append(character);
@@ -309,7 +327,7 @@ public final class StandardTextCases {
             String title,
             String example,
             String joinDelimiter,
-            BiFunction<Integer, String, String> wordToTextCaseConverter,
+            WordCaseConversion wordToTextCaseConverter,
             WordsSplitter wordsSplitter
     ) implements TextCase {
 
@@ -349,9 +367,12 @@ public final class StandardTextCases {
             Objects.requireNonNull(words);
             Objects.requireNonNull(joinDelimiter);
 
+            String previousWord = null;
             var result = new StringJoiner(joinDelimiter);
             for (int i = 0; i < words.size(); i++) {
-                result.add(wordToTextCaseConverter.apply(i, words.get(i)));
+                String word = words.get(i);
+                result.add(wordToTextCaseConverter.convert(i, previousWord, word));
+                previousWord = word;
             }
             return result.toString();
         }
@@ -393,13 +414,21 @@ public final class StandardTextCases {
 
     // -- Inner Type ------------------------------------------------------------------------------------------------ //
 
-    private enum WordCaseConversion {
-        TO_UPPER_CASE(text -> text.toUpperCase(TO_UPPER_CASE_LOCALE)),
-        TO_LOWER_CASE(text -> text.toLowerCase(TO_LOWER_CASE_LOCALE));
+    @FunctionalInterface
+    private interface WordCaseConversion {
+
+        String convert(int index, String previousWord, String word);
+    }
+
+    // -- Inner Type ------------------------------------------------------------------------------------------------ //
+
+    private enum CaseConversionOfFirstCharacterInWord {
+        TO_UPPER_CASE(TextUtilities::toUpperCase),
+        TO_LOWER_CASE(TextUtilities::toLowerCase);
 
         private final Function<String, String> converter;
 
-        WordCaseConversion(Function<String, String> converter) {
+        CaseConversionOfFirstCharacterInWord(Function<String, String> converter) {
             this.converter = converter;
         }
 
