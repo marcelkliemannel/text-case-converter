@@ -12,12 +12,12 @@ This library is available at [Maven Central](https://mvnrepository.com/artifact/
 
 ```kotlin
 // Main dependency
-implementation 'dev.turingcomplete:test-case-converter:1.0.0' // Groovy build script
-implementation("dev.turingcomplete:test-case-converter:1.0.0") // Kotlin build script
+implementation 'dev.turingcomplete:test-case-converter:1.0.2' // Groovy build script
+implementation("dev.turingcomplete:test-case-converter:1.0.2") // Kotlin build script
 
 // Optional: Kotlin extensions
-implementation 'dev.turingcomplete:test-case-converter-kotlin-extension:1.0.0' // Groovy build script
-implementation("dev.turingcomplete:test-case-converter-kotlin-extension:1.0.0") // Kotlin build script
+implementation 'dev.turingcomplete:test-case-converter-kotlin-extension:1.0.2' // Groovy build script
+implementation("dev.turingcomplete:test-case-converter-kotlin-extension:1.0.2") // Kotlin build script
 ```
 
 ### Maven
