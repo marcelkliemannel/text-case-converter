@@ -64,7 +64,7 @@ The class `dev.turingcomplete.textcaseconverter.StandardTextCases` contains stat
 | Cobol Case           | COBOL-CASE           |                                                                                                                                                   |
 | Pascal Case          | PascalCase           |                                                                                                                                                   |
 | Pascal Snake Case    | Pascal_Snake_Case    | First character is always uppercase.                                                                                                              |
-| Camel Snake Case     | camel_Snake_Case     | First character is always lowercase.                                                                                                              |
+| Camel Snake Case     | camel_Snake_Case     | Uses soft camel case. First character is always lowercase.                                                                                        |
 | Lower Case           | lowercase            |                                                                                                                                                   |
 | Upper Case           | UPPERCASE            |                                                                                                                                                   |
 | Inverted Case        | iNVERTED cASE        | The case of each character will be flipped.                                                                                                       |

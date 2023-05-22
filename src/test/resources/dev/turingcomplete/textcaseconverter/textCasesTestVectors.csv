@@ -7,3 +7,4 @@ foO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOo,FoO
 foo;bar,fooBar,fooBar,foo-bar,foo_bar,FOO_BAR,Foo-Bar,FOO-BAR,FooBar,Foo_Bar,foo_Bar,foobar,FOOBAR,FOO BAR,FoO BaR
 foo;bar;baz,fooBarBaz,fooBarBaz,foo-bar-baz,foo_bar_baz,FOO_BAR_BAZ,Foo-Bar-Baz,FOO-BAR-BAZ,FooBarBaz,Foo_Bar_Baz,foo_Bar_Baz,foobarbaz,FOOBARBAZ,FOO BAR BAZ,FoO BaR BaZ
 FOO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,foo,fOo
+foo;S;Q;L,fooSQL,fooSql,foo-s-q-l,foo_s_q_l,FOO_S_Q_L,Foo-S-Q-L,FOO-S-Q-L,FooSQL,Foo_S_Q_L,foo_S_Q_L,foosql,FOOSQL,FOO s q l,FoO s q l
