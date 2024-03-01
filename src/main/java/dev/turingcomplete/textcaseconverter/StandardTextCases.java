@@ -218,6 +218,27 @@ public final class StandardTextCases {
             SPACES
     );
 
+    /**
+     * Contains all standard {@link TextCase}s defined in this class.
+     */
+    public static final Collection<TextCase> ALL_STANDARD_TEXT_CASES = List.of(
+            STRICT_CAMEL_CASE,
+            SOFT_CAMEL_CASE,
+            KEBAB_CASE,
+            SNAKE_CASE,
+            SCREAMING_SNAKE_CASE,
+            TRAIN_CASE,
+            COBOL_CASE,
+            PASCAL_CASE,
+            PASCAL_SNAKE_CASE,
+            CAMEL_SNAKE_CASE,
+            LOWER_CASE,
+            UPPER_CASE,
+            INVERTED_CASE,
+            ALTERNATING_CASE
+    );
+
+
     // -- Instance Fields ------------------------------------------------------------------------------------------- //
     // -- Initialization -------------------------------------------------------------------------------------------- //
     // -- Exposed Methods ------------------------------------------------------------------------------------------- //

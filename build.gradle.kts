@@ -107,7 +107,7 @@ allprojects {
      * See https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials
      *
      * The following Gradle properties must be set:
-     * - signing.keyId (last 8 symbols of the key ID from 'gpg -K')
+     * - signing.keyId (last eight symbols of the key ID from 'gpg -K')
      * - signing.password
      * - signing.secretKeyRingFile ('gpg --keyring secring.gpg --export-secret-keys > ~/.gnupg/secring.gpg')
      */
