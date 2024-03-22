@@ -239,7 +239,7 @@ public final class StandardTextCases {
     /**
      * Contains all standard {@link TextCase}s defined in this class.
      */
-    public static final Collection<TextCase> ALL_STANDARD_TEXT_CASES = List.of(
+    public static final List<TextCase> ALL_STANDARD_TEXT_CASES = List.of(
             STRICT_CAMEL_CASE,
             SOFT_CAMEL_CASE,
             KEBAB_CASE,

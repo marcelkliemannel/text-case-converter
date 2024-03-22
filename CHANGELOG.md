@@ -6,6 +6,10 @@
 
 - Add dot text case
 
+### Changed
+
+- Breaking change: Constant `ALL_STANDARD_TEXT_CASES` is now of type `List`
+
 ## 1.1.0 - 2024-03-01
 
 ### Added
