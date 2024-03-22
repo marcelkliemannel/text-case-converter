@@ -7,8 +7,11 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static dev.turingcomplete.textcaseconverter.StandardTextCases.*;
@@ -43,7 +46,8 @@ public class StandardTextCasesTest {
             String lowerCase,
             String upperCase,
             String invertedCase,
-            String alternatingCase
+            String alternatingCase,
+            String dotCase
     ) {
         List<String> words = inputWordsEncoded == null ? List.of() : Arrays.stream(inputWordsEncoded.split(";")).toList();
         assertThat(STRICT_CAMEL_CASE.convert(words)).isEqualTo(requireNonNullElse(strictCamelCase, ""));
@@ -60,6 +64,7 @@ public class StandardTextCasesTest {
         assertThat(UPPER_CASE.convert(words)).isEqualTo(requireNonNullElse(upperCase, ""));
         assertThat(INVERTED_CASE.convert(words)).isEqualTo(requireNonNullElse(invertedCase, ""));
         assertThat(ALTERNATING_CASE.convert(words)).isEqualTo(requireNonNullElse(alternatingCase, ""));
+        assertThat(DOT_CASE.convert(words)).isEqualTo(requireNonNullElse(dotCase, ""));
     }
 
     /**
@@ -192,8 +197,22 @@ public class StandardTextCasesTest {
                 arguments(LOWER_CASE, null),
                 arguments(UPPER_CASE, null),
                 arguments(INVERTED_CASE, null),
-                arguments(ALTERNATING_CASE, null)
+                arguments(ALTERNATING_CASE, null),
+                arguments(DOT_CASE, null)
         );
+    }
+
+    @Test
+    void testCollectionOfAllStandardTestCases() throws IllegalAccessException {
+        Set<TextCase> allStandardTextCases = new HashSet<>();
+        for (Field field : StandardTextCases.class.getFields()) {
+            Object fieldValue = field.get(null);
+            if (fieldValue instanceof TextCase textCase) {
+                allStandardTextCases.add(textCase);
+            }
+        }
+        assertThat(allStandardTextCases).hasSize(15);
+        assertThat(ALL_STANDARD_TEXT_CASES).containsExactlyInAnyOrder(allStandardTextCases.toArray(TextCase[]::new));
     }
 
     // -- Private Methods ------------------------------------------------------------------------------------------- //

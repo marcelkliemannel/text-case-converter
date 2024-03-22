@@ -118,6 +118,25 @@ class StandardWordsSplittersTest {
         assertThat(actualWords).containsExactly(expectedWords);
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {
+            ",",
+            "f,f",
+            "f.o,f|o",
+            ".,",
+            ".o,o",
+            ".o.,o",
+            "f.o.o,f|o|o",
+            "f.o....o,f|o|o"
+    })
+    void testDotWordSeparator(String input, String expectedWordsEncoded) {
+        input = input == null ? "" : input;
+        String[] expectedWords = expectedWordsEncoded == null ? new String[0] : expectedWordsEncoded.split("\\|");
+
+        List<String> actualWords = StandardWordsSplitters.DOT.split(input);
+        assertThat(actualWords).containsExactly(expectedWords);
+    }
+
     // -- Private Methods ------------------------------------------------------------------------------------------- //
     // -- Inner Type ------------------------------------------------------------------------------------------------ //
 }

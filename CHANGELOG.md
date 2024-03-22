@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add dot text case
+
 ## 1.1.0 - 2024-03-01
 
 ### Added

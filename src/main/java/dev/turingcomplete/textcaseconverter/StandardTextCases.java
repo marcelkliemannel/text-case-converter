@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import static dev.turingcomplete.textcaseconverter.StandardWordsSplitters.*;
 import static dev.turingcomplete.textcaseconverter._internal.TextUtilities.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A collection of common {@link TextCase}s.
@@ -16,7 +17,7 @@ import static dev.turingcomplete.textcaseconverter._internal.TextUtilities.*;
  * {@link String#toLowerCase(Locale)} gets used instead of
  * {@link Character#toUpperCase(char)} or {@link Character#toLowerCase(char)}.
  * The reason for this is, that the {@link String} ones take the {@link Locale}
- * into account which may have an effect on the lower or upper case character.
+ * into account which may affect the lower or upper case character.
  */
 public final class StandardTextCases {
     // -- Class Fields ---------------------------------------------------------------------------------------------- //
@@ -219,6 +220,23 @@ public final class StandardTextCases {
     );
 
     /**
+     * A {@link TextCase} that represents the strict form of camel case.
+     *
+     * <p>In the strict form, every upper case character will be treated as the
+     * start of a new word. For example, {@code SQL} would be three words:
+     * {@code S}, {@code Q} and {@code L}.
+     *
+     * <p>Example: {@code camelCase}.
+     */
+    public static final TextCase DOT_CASE = new StandardTextCase(
+            "Dot Case",
+            "dot.case",
+            ".",
+            createWordToLowerCaseConverter(),
+            DOT
+    );
+
+    /**
      * Contains all standard {@link TextCase}s defined in this class.
      */
     public static final Collection<TextCase> ALL_STANDARD_TEXT_CASES = List.of(
@@ -235,7 +253,8 @@ public final class StandardTextCases {
             LOWER_CASE,
             UPPER_CASE,
             INVERTED_CASE,
-            ALTERNATING_CASE
+            ALTERNATING_CASE,
+            DOT_CASE
     );
 
 
@@ -354,39 +373,39 @@ public final class StandardTextCases {
 
         @Override
         public String convert(String... words) {
-            Objects.requireNonNull(words);
+            requireNonNull(words);
 
             return convert(Arrays.asList(words), "");
         }
 
         @Override
         public String convert(List<String> words) {
-            Objects.requireNonNull(words);
+            requireNonNull(words);
 
             return convert(words, joinDelimiter);
         }
 
         @Override
         public String convert(String text, WordsSplitter wordsSplitter) {
-            Objects.requireNonNull(text);
-            Objects.requireNonNull(wordsSplitter);
+            requireNonNull(text);
+            requireNonNull(wordsSplitter);
 
             return convert(wordsSplitter.split(text));
         }
 
         @Override
         public String convert(String text, WordsSplitter wordsSplitter, String joinDelimiter) {
-            Objects.requireNonNull(text);
-            Objects.requireNonNull(wordsSplitter);
-            Objects.requireNonNull(joinDelimiter);
+            requireNonNull(text);
+            requireNonNull(wordsSplitter);
+            requireNonNull(joinDelimiter);
 
             return convert(wordsSplitter.split(text), joinDelimiter);
         }
 
         @Override
         public String convert(List<String> words, String joinDelimiter) {
-            Objects.requireNonNull(words);
-            Objects.requireNonNull(joinDelimiter);
+            requireNonNull(words);
+            requireNonNull(joinDelimiter);
 
             String previousWord = null;
             var result = new StringJoiner(joinDelimiter);
@@ -400,34 +419,34 @@ public final class StandardTextCases {
 
         @Override
         public String convertFrom(TextCase originTextCase, String originText) {
-            Objects.requireNonNull(originTextCase);
-            Objects.requireNonNull(originText);
+            requireNonNull(originTextCase);
+            requireNonNull(originText);
 
             return convert(originTextCase.wordsSplitter().split(originText), joinDelimiter);
         }
 
         @Override
         public String convertFrom(TextCase originTextCase, String originText, String wordsDelimiter) {
-            Objects.requireNonNull(originTextCase);
-            Objects.requireNonNull(originText);
-            Objects.requireNonNull(wordsDelimiter);
+            requireNonNull(originTextCase);
+            requireNonNull(originText);
+            requireNonNull(wordsDelimiter);
 
             return convert(originTextCase.wordsSplitter().split(originText), wordsDelimiter);
         }
 
         @Override
         public String convertTo(TextCase targetTextCase, String originText) {
-            Objects.requireNonNull(targetTextCase);
-            Objects.requireNonNull(originText);
+            requireNonNull(targetTextCase);
+            requireNonNull(originText);
 
             return targetTextCase.convertFrom(this, originText);
         }
 
         @Override
         public String convertTo(TextCase targetTextCase, String originText, String wordsDelimiter) {
-            Objects.requireNonNull(targetTextCase);
-            Objects.requireNonNull(originText);
-            Objects.requireNonNull(wordsDelimiter);
+            requireNonNull(targetTextCase);
+            requireNonNull(originText);
+            requireNonNull(wordsDelimiter);
 
             return targetTextCase.convertFrom(this, originText, wordsDelimiter);
         }

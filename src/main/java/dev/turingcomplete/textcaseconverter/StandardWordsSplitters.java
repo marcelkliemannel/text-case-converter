@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * {@link String#toLowerCase(Locale)} gets used instead of
  * {@link Character#toUpperCase(char)} or {@link Character#toLowerCase(char)}.
  * The reason for this is, that the {@link String} ones take the {@link Locale}
- * into account which may have an effect on the lower or upper case character.
+ * into account which may affect the lower or upper case character.
  */
 public final class StandardWordsSplitters {
     // -- Class Fields ---------------------------------------------------------------------------------------------- //
@@ -39,18 +39,24 @@ public final class StandardWordsSplitters {
     public static final WordsSplitter UNDERSCORE = WordsSplitter.splitByString("_");
 
     /**
+     * A {@link WordsSplitter} that splits a text around the dot character {@code .}.
+     */
+    public static final WordsSplitter DOT = WordsSplitter.splitByString(".");
+
+    /**
      * A {@link WordsSplitter} that splits a text around every upper case
-     * characters.
+     * character.
      *
-     * <p>This will split `SQL` into three words `S`, `Q` and `L`.
+     * <p>Example: This will split `SQL` into three words {@code S}, {@code Q}
+     * and {@code L}.
      */
     public static final WordsSplitter STRICT_UPPER_CASE = text -> toWordsByUpperCaseCharacter(text, true);
 
     /**
      * A {@link WordsSplitter} that splits a text around every upper case
-     * characters if the previous one is not upper case.
+     * character if the previous one is not an upper case.
      *
-     * <p>This will split `SQL` into one word `SQL`.
+     * <p>Example: This will split {@code SQL} into one word {@code SQL}.
      */
     public static final WordsSplitter SOFT_UPPER_CASE = text -> toWordsByUpperCaseCharacter(text, false);
 

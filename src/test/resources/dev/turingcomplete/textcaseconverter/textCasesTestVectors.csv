@@ -1,10 +1,10 @@
-words,STRICT_CAMEL_CASE,SOFT_CAMEL_CASE,KEBAB_CASE,SNAKE_CASE,SCREAMING_SNAKE_CASE,TRAIN_CASE,COBOL_CASE,PASCAL_CASE,PASCAL_SNAKE_CASE,CAMEL_SNAKE_CASE,LOWER_CASE,UPPER_CASE,INVERTED_CASE,ALTERNATING_CASE
-,,,,,,,,,,,,,,
-f,f,f,f,f,F,F,F,F,F,f,f,F,F,F
-foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOO,FoO
-Foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,fOO,fOo
-foO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOo,FoO
-foo;bar,fooBar,fooBar,foo-bar,foo_bar,FOO_BAR,Foo-Bar,FOO-BAR,FooBar,Foo_Bar,foo_Bar,foobar,FOOBAR,FOO BAR,FoO BaR
-foo;bar;baz,fooBarBaz,fooBarBaz,foo-bar-baz,foo_bar_baz,FOO_BAR_BAZ,Foo-Bar-Baz,FOO-BAR-BAZ,FooBarBaz,Foo_Bar_Baz,foo_Bar_Baz,foobarbaz,FOOBARBAZ,FOO BAR BAZ,FoO BaR BaZ
-FOO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,foo,fOo
-foo;S;Q;L,fooSQL,fooSql,foo-s-q-l,foo_s_q_l,FOO_S_Q_L,Foo-S-Q-L,FOO-S-Q-L,FooSQL,Foo_S_Q_L,foo_S_Q_L,foosql,FOOSQL,FOO s q l,FoO s q l
+words,STRICT_CAMEL_CASE,SOFT_CAMEL_CASE,KEBAB_CASE,SNAKE_CASE,SCREAMING_SNAKE_CASE,TRAIN_CASE,COBOL_CASE,PASCAL_CASE,PASCAL_SNAKE_CASE,CAMEL_SNAKE_CASE,LOWER_CASE,UPPER_CASE,INVERTED_CASE,ALTERNATING_CASE,DOT_CASE
+,,,,,,,,,,,,,,,
+f,f,f,f,f,F,F,F,F,F,f,f,F,F,F,f
+foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOO,FoO,foo
+Foo,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,fOO,fOo,foo
+foO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,FOo,FoO,foo
+foo;bar,fooBar,fooBar,foo-bar,foo_bar,FOO_BAR,Foo-Bar,FOO-BAR,FooBar,Foo_Bar,foo_Bar,foobar,FOOBAR,FOO BAR,FoO BaR,foo.bar
+foo;bar;baz,fooBarBaz,fooBarBaz,foo-bar-baz,foo_bar_baz,FOO_BAR_BAZ,Foo-Bar-Baz,FOO-BAR-BAZ,FooBarBaz,Foo_Bar_Baz,foo_Bar_Baz,foobarbaz,FOOBARBAZ,FOO BAR BAZ,FoO BaR BaZ,foo.bar.baz
+FOO,foo,foo,foo,foo,FOO,Foo,FOO,Foo,Foo,foo,foo,FOO,foo,fOo,foo
+foo;S;Q;L,fooSQL,fooSql,foo-s-q-l,foo_s_q_l,FOO_S_Q_L,Foo-S-Q-L,FOO-S-Q-L,FooSQL,Foo_S_Q_L,foo_S_Q_L,foosql,FOOSQL,FOO s q l,FoO s q l,foo.s.q.l
