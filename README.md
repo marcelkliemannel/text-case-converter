@@ -12,12 +12,12 @@ This library is available at [Maven Central](https://mvnrepository.com/artifact/
 
 ```kotlin
 // Main dependency
-implementation 'dev.turingcomplete:test-case-converter:2.0.0' // Groovy build script
-implementation("dev.turingcomplete:test-case-converter:2.0.0") // Kotlin build script
+implementation 'dev.turingcomplete:text-case-converter:2.0.0' // Groovy build script
+implementation("dev.turingcomplete:text-case-converter:2.0.0") // Kotlin build script
 
 // Optional: Kotlin extensions
-implementation 'dev.turingcomplete:test-case-converter-kotlin-extension:2.0.0' // Groovy build script
-implementation("dev.turingcomplete:test-case-converter-kotlin-extension:2.0.0") // Kotlin build script
+implementation 'dev.turingcomplete:text-case-converter-kotlin-extension:2.0.0' // Groovy build script
+implementation("dev.turingcomplete:text-case-converter-kotlin-extension:2.0.0") // Kotlin build script
 ```
 
 ### Maven
@@ -26,26 +26,26 @@ implementation("dev.turingcomplete:test-case-converter-kotlin-extension:2.0.0") 
 <!-- Main dependency -->
 <dependency>
     <groupId>dev.turingcomplete</groupId>
-    <artifactId>test-case-converter</artifactId>
+    <artifactId>text-case-converter</artifactId>
     <version>2.0.0</version>
 </dependency>
 
 <!-- Optional: Kotlin extensions -->
 <dependency>
     <groupId>dev.turingcomplete</groupId>
-    <artifactId>test-case-converter-kotlin-extension</artifactId>
+    <artifactId>text-case-converter-kotlin-extension</artifactId>
     <version>2.0.0</version>
 </dependency>
 ```
 
 ## General Concept
 
-The foundation of this library are two interfaces:
+The foundation of this library consists of two interfaces:
 
 - A single text case is represented by the interface `dev.turingcomplete.textcaseconverter.TextCase`. It provides meta information (e.g., `title()` and `example()`) and, through several variations of `convert*()` methods, the ability to convert a text to or from that text case.
-- The interface `dev.turingcomplete.textcaseconverter.WordsSplitter` which defines an utility that splits a text into a list of words. 
+- The interface `dev.turingcomplete.textcaseconverter.WordsSplitter` defines a utility that splits a text into a list of words. 
 
-Generally, we must understand that a text case converter works on a list of words, not on raw text. This is because each text case puts the words of a text together in a different way. However, in a raw text it is not machine-visible where a word starts and ends without an additional `WordsSplitter`. For example, in `foo bar baz` the start/end would be defined by a space, but in `fooBarBaz` it would be defined by the case change.
+Generally, we must understand that a text case converter works on a list of words that are not raw text. This is because each text case puts the words of a text together in a different way. However, raw text is not machine-visible where a word starts and ends without an additional `WordsSplitter`. For example, in `foo bar baz` the start/end would be defined by a space, but in `fooBarBaz` it would be determined by the case change.
 
 The library has several built-in implementations of both interfaces in the classes `StandardTextCases` and `StandardWordsSplitters` to cover the most common text cases and ways of splitting a text into words (see next chapters).
 
@@ -56,7 +56,7 @@ The class `dev.turingcomplete.textcaseconverter.StandardTextCases` contains stat
 | Name                 | Example              | Remark                                                                                                                                            |
 |----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
 | Strict Camel Case    | camelSQLCase         | Each upper case character defines a new word.                                                                                                     |
-| Soft Camel Case      | camelSqlCase         | An uppercase character defines a new word only if the previous character is not in upper case.                                                    |
+| Soft Camel Case      | camelSqlCase         | An uppercase character defines a new word only if the previous character is not in uppercase.                                                    |
 | Kebab Case           | kebab-case           |                                                                                                                                                   |
 | Snake Case           | snake_case           |                                                                                                                                                   |
 | Screaming Snake Case | SCREAMING_SNAKE_CASE |                                                                                                                                                   |
@@ -64,7 +64,7 @@ The class `dev.turingcomplete.textcaseconverter.StandardTextCases` contains stat
 | Cobol Case           | COBOL-CASE           |                                                                                                                                                   |
 | Pascal Case          | PascalCase           |                                                                                                                                                   |
 | Pascal Snake Case    | Pascal_Snake_Case    | First character is always uppercase.                                                                                                              |
-| Camel Snake Case     | camel_Snake_Case     | Uses soft camel case. First character is always lowercase.                                                                                        |
+| Camel Snake Case     | camel_Snake_Case     | Uses soft camel case. The first character is always lowercase.                                                                                        |
 | Lower Case           | lowercase            |                                                                                                                                                   |
 | Upper Case           | UPPERCASE            |                                                                                                                                                   |
 | Inverted Case        | iNVERTED cASE        | The case of each character will be flipped.                                                                                                       |
@@ -94,7 +94,7 @@ StandardTextCases.COBOL_CASE.convertTo(StandardTextCases.CAMEL_CASE, "FOO-BAR-BA
 
 The class `dev.turingcomplete.textcaseconverter.StandardWordsSplitters` provides static instances for the most common ways to split a text into words:
 
-- By spaces (` `), that splits a text around (possible multiple) space characters. Blank words are omitted.
+- By spaces (` `), that splits a text around (possibly multiple) space characters. Blank words are omitted.
 - By a single dash (`-`). Blank words are omitted.
 - By a single underscore (`_`). Blank words are omitted.
 - By a "strict" upper case character, there each upper case character determines a new word. For example `fooBar` would be the two words `foo` and `Bar`, and `SQL` would be the three words `S`, `Q` and `L`.
@@ -104,7 +104,7 @@ Note that each `TextCase` provides a `WordsSplitter` through `TextCase#wordsSpli
 
 ## Kotlin Extension
 
-By adding library `test-case-converter-kotlin-extension`, some Kotlin extensions are provided, making it easier to use this library in Kotlin code. These additional features can be seen in the following example:
+By adding the library `text-case-converter-kotlin-extension`, some Kotlin extensions are provided, making it easier to use this library in Kotlin code. These additional features can be seen in the following example:
 
 ```kotlin
 // Convert the given raw text into Snake Case. Both will return `foo_bar`.
@@ -117,7 +117,7 @@ By adding library `test-case-converter-kotlin-extension`, some Kotlin extensions
 
 ## Locale Handling
 
-Some built-in text cases and words splitters use `String#toLowerCase()` or `String#toUpperCase()`. The output of both methods is locale sensitive. All calls to these methods in this library will use the `Locale` set in the static fields of the `dev.turingcomplete.textcaseconverter.Configuration` class. By default the `Locale.ROOT` is used.
+Some built-in text cases and words splitters use `String#toLowerCase()` or `String#toUpperCase()`. The output of both methods is locale-sensitive. All calls to these methods in this library will use the `Locale` set in the static fields of the `dev.turingcomplete.textcaseconverter.Configuration` class. By default, the `Locale.ROOT` is used.
 
 ## Licensing
 
